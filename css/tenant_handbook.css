@@ -1,0 +1,38 @@
+/* Typography */
+h1, h2, h3 {
+    font-weight: bold;
+    margin-bottom: 10px; /* Consistent bottom margin for headings */
+}
+
+.content {
+    margin: 40px 0; /* Space above and below the main content */
+}
+
+/* Spacing adjustments */
+h1 {
+    margin-top: 40px; /* Extra space above the Welcome section */
+}
+
+h2 {
+    margin-top: 30px; /* Space above each section header */
+}
+
+/* Paragraphs and lists */
+p, ul {
+    margin: 20px 0; /* Vertical space for paragraphs and lists */
+}
+
+/* Ensure lists have default styles */
+ul {
+    padding-left: 20px; /* Add padding for default bullet alignment */
+}
+
+/* List items */
+li {
+    margin-bottom: 10px; /* Space between list items */
+}
+
+/* Consider using a consistent line height for better readability */
+body {
+    line-height: 1.6; /* Improve text readability */
+}

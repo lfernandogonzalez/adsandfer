@@ -4,25 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adsandfer Properties</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-
+    
 </head>
+
 <body>
+   
     <header class="header">
-        <nav class="nav-menu">
-            <a href="index.html">Home</a>
-            <a href="#our_properties">Our Properties</a>
-            <a href="tenant_handbook.html">Tenant Handbook</a>
-            <a href="#mainteanance_request">Maintenance Request</a>
-            <a href="#pay_rent">Pay Rent</a>
-        </nav>
         <div class="logo">
             <img src="img/logo_transparent.png" alt="Logo">
         </div>
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="tenant_handbook.html">Tenant Handbook</a>
+            <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">Maintenance Request</a>
+            <a href="pay_rent.html">Pay Rent</a>
+        </nav>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </header>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("navMenu");
+            menu.classList.toggle("active");
+        }
+    </script>
+
+
+
+
     <main>
         <div class="welcome-section">
             <div class="content">
@@ -36,18 +54,83 @@
                 <h2>Featured Rentals</h2>
                 <div class="property-list">
                     <div class="property-image">
-                        <img src="../properties/100 brockville/pictures/building.jpg" alt="Building Image">
+                        <div class="gallery">
+                            <div class="gallery-container">
+                                <img id="galleryImage" src="../Properties/100 Brockville/Pictures/unit 1 - bathroom.jpg" alt="Gallery Image" class="gallery-image">
+                                <div class="gallery-arrows">
+                                    <span class="arrow left-arrow" onclick="changeImage(-1)">&#10094;</span>
+                                    <span class="arrow right-arrow" onclick="changeImage(1)">&#10095;</span>
+                                </div>
+                            </div>
+                            <div class="dots-container">
+                                <span class="dot" onclick="currentImage(0)"></span>
+                                <span class="dot" onclick="currentImage(1)"></span>
+                                <span class="dot" onclick="currentImage(2)"></span>
+                                <span class="dot" onclick="currentImage(3)"></span>
+                                <span class="dot" onclick="currentImage(4)"></span>
+                                <span class="dot" onclick="currentImage(5)"></span>
+                                <span class="dot" onclick="currentImage(6)"></span>
+                                <span class="dot" onclick="currentImage(7)"></span>
+
+                                <!-- Add more dots as needed for additional images -->
+                            </div>
+                        </div>
+                        <script>
+                            const images = [
+                                "../Properties/100 Brockville/Pictures/Building.jpg",
+                                "../Properties/100 Brockville/Pictures/aereal 1.jpg",
+                                "../Properties/100 Brockville/Pictures/aereal 2.jpg",
+                                "../Properties/100 Brockville/Pictures/aereal 3.jpg",
+                                "../Properties/100 Brockville/Pictures/unit 1 - kitchen.jpg",
+                                "../Properties/100 Brockville/Pictures/unit 1 - bathroom.jpg",
+                                "../Properties/100 Brockville/Pictures/unit 1 - laundry.jpg",
+                                "../Properties/100 Brockville/Pictures/unit 1.jpg"
+                                // Add more image paths as needed
+                            ];
+                        
+                            let currentIndex = 0;
+                        
+                            function updateGallery() {
+                                const galleryImage = document.getElementById('galleryImage');
+                                galleryImage.src = images[currentIndex];
+                                updateDots();
+                            }
+                        
+                            function changeImage(direction) {
+                                currentIndex = (currentIndex + direction + images.length) % images.length; // Wrap around
+                                updateGallery();
+                            }
+                        
+                            function currentImage(index) {
+                                currentIndex = index;
+                                updateGallery();
+                            }
+                        
+                            function updateDots() {
+                                const dots = document.querySelectorAll('.dot');
+                                dots.forEach((dot, index) => {
+                                    dot.classList.remove('active');
+                                    if (index === currentIndex) {
+                                        dot.classList.add('active');
+                                    }
+                                });
+                            }
+                        
+                            // Initialize the gallery on page load
+                            document.addEventListener('DOMContentLoaded', updateGallery);
+                        </script>
+                        
                     </div>
                     <div class="property-description">
                         <h3>100 Brockville, Smith Falls</h3>
                         <p>
-                            Comfortable <b>2-bedroom, 1-bathroom</b> main floor unit in picturesque brick triplex at the heart of Smiths Falls. Newly renovated kitchen and bathroom, complete with modern fixtures and finishes, plus the convenience of in-suite laundry. The living room features hardwood floors and a large window that fills the space with natural light. Enjoy the convenience of both front and back entrances and on-site parking.
+                            Comfortable <strong>2-bedroom, 1-bathroom</strong> main floor unit in picturesque brick triplex at the heart of Smiths Falls. Newly renovated kitchen and bathroom, complete with modern fixtures and finishes, plus the convenience of in-suite laundry. The living room features hardwood floors and a large window that fills the space with natural light. Enjoy the convenience of both front and back entrances and on-site parking.
                         </p>
                         <p>
                             Fantastic location! Walking distance of all the charming shops, restaurants, and cafes in Downtown Smiths Falls, along with scenic Victoria Park by the canal and Settler’s Ridge Mall. $2100/month + Hydro. Available Jan 1st, 2025.
                         </p>
                         <p>
-                            <a href="#">Request a viewing</a>
+                            <a href="https://forms.gle/BKnwgA3SHBtwU6Kh6">Request a viewing</a>
                         </p>
                     </div>
                 </div>
@@ -59,22 +142,27 @@
                 <h2>Tenant Resources</h2>
                 <div class="resource-columns">
                     <div class="resource-item">
-                        <img src="img/tenant_handbook.png" alt="Tenant Handbook">
-                        <h3>Tenant Handbook</h3>
+                        <a href="tenant_handbook.html">
+                            <img src="img/tenant_handbook.png" alt="Tenant Handbook">
+                            <h3>Tenant Handbook</h3>
+                        </a>
                     </div>
                     <div class="resource-item">
-                        <img src="img/maintenance_request.png" alt="Maintenance Request">
-                        <h3>Maintenance Request</h3>
+                        <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">
+                            <img src="img/maintenance_request.png" alt="Maintenance Request">
+                            <h3>Maintenance Request</h3>
+                        </a>
                     </div>
                     <div class="resource-item">
-                        <img src="img/pay_rent.jpg" alt="Pay Rent">
-                        <h3>Pay Rent</h3>
+                        <a href="pay_rent.html">
+                            <img src="img/pay_rent.jpg" alt="Pay Rent">
+                            <h3>Pay Rent</h3>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         
-
         <footer class="footer">
             <div class="content">
                 <div class="footer-info">
@@ -91,7 +179,6 @@
                 </div>
             </div>
         </footer>
-        
         
                             
         
