@@ -42,9 +42,6 @@
     margin: 0 auto; /* Center the gallery */
 }
 
-.gallery-container {
-    position: relative;
-}
 
 .gallery-image {
     width: 400px;         /* Set the width to 200px */
