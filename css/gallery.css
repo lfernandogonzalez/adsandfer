@@ -1,11 +1,20 @@
+.gallery-container {
+    display: flex;   
+    flex: 0 0 40%;             /* Use flexbox for layout */
+    flex-direction: column;     /* Stack children vertically */
+    align-items: center;        /* Center items horizontally */
+    width: 100%;                /* Full width of the parent */
+    margin: 0 auto;             /* Center the gallery container */
+}
+
 .gallery {
     position: relative;
-    max-width: 800px;
-    height: 300px;
-    margin: 0 auto;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
+    max-width: 800px;          /* Maximum width for larger screens */
+    width: 100%;                /* Full width on smaller screens */
+    height: 300px;              /* Fixed height for the gallery */
+    overflow: hidden;           /* Hide overflow */
+    display: flex;              /* Flexbox for alignment */
+    align-items: center;        /* Center the image vertically */
 }
 
 .gallery-link {
@@ -20,10 +29,10 @@
 }
 
 .gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+    width: 100%;                /* Full width of the gallery */
+    height: 100%;               /* Full height of the gallery */
+    object-fit: cover;          /* Maintain aspect ratio and fill the space */
+    border-radius: 5px;        /* Optional rounded corners */
 }
 
 .gallery-arrows {
@@ -32,8 +41,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    transform: translateY(-50%);
-    pointer-events: none; /* Allow clicks to pass through */
+    transform: translateY(-50%); /* Center arrows vertically */
 }
 
 .arrow {
@@ -42,28 +50,41 @@
     color: white;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
-    pointer-events: auto; /* Restore click events only on arrows */
-    z-index: 1;
 }
 
-
 .dots-container {
-    text-align: center;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+    text-align: center;        /* Center the dots */
+    margin-top: 10px;         /* Space above the dots */
+    margin-bottom: 10px;
 }
 
 .dot {
     height: 12px;
     width: 12px;
-    margin: 0 2px;
-    background-color: #bbb; /* Default dot color */
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
+    margin: 0 2px;            /* Margin between dots */
+    background-color: #bbb;   /* Default dot color */
+    border-radius: 50%;       /* Make dots circular */
+    display: inline-block;     /* Display dots inline */
+    cursor: pointer;           /* Cursor change on hover */
 }
 
 .dot.active {
     background-color: #857251; /* Active dot color */
+}
+
+/* Media query for responsive behavior */
+@media (max-width: 768px) {
+    .gallery-container {
+        flex: 0 0 100%;         /* Full width on smaller screens */
+        margin: 0;              /* Remove margin for better responsiveness */
+    }
+
+    .gallery {
+        width: 100%;            /* Ensure gallery takes full width on smaller screens */
+        height: 300px;          /* Maintain fixed height for gallery */
+    }
+
+    .gallery-image {
+        height: 100%;           /* Maintain fixed height */
+    }
 }
