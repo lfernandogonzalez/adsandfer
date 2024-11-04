@@ -1,61 +1,63 @@
 .gallery-container {
-    display: flex;   
-    flex: 0 0 40%;             /* Use flexbox for layout */
-    flex-direction: column;     /* Stack children vertically */
-    align-items: center;        /* Center items horizontally */
-    width: 100%;                /* Full width of the parent */
-    margin: 0 auto;             /* Center the gallery container */
+    flex: 0 0 40%;             /* Restrict image size to 40% */
+    display: flex;             /* Use flexbox for layout */
+    flex-direction: column;    /* Stack children vertically */
+    align-items: center;       /* Center items horizontally */
+    width: 100%;               /* Full width of the parent */
+    margin: 0 auto;            /* Center the gallery container */
 }
 
 .gallery {
     position: relative;
-    max-width: 800px;          /* Maximum width for larger screens */
-    width: 100%;                /* Full width on smaller screens */
-    height: 300px;              /* Fixed height for the gallery */
-    overflow: hidden;           /* Hide overflow */
-    display: flex;              /* Flexbox for alignment */
-    align-items: center;        /* Center the image vertically */
+    max-width: 800px;         /* Maximum width for larger screens */
+    width: 100%;               /* Full width on smaller screens */
+    height: 300px;             /* Fixed height for the gallery */
+    overflow: hidden;          /* Hide overflow */
+    display: flex;             /* Flexbox for alignment */
+    align-items: center;       /* Center the image vertically */
 }
 
 .gallery-link {
-    position: absolute;
+    position: absolute;        /* Cover the whole gallery */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    display: flex;
+    display: flex;             /* Flexbox for centering */
     justify-content: center;
     align-items: center;
+    z-index: 1;                /* Ensure it is above the image */
 }
 
 .gallery-image {
-    width: 100%;                /* Full width of the gallery */
-    height: 100%;               /* Full height of the gallery */
-    object-fit: cover;          /* Maintain aspect ratio and fill the space */
+    width: 100%;               /* Full width of the gallery */
+    height: 100%;              /* Full height of the gallery */
+    object-fit: cover;         /* Maintain aspect ratio and fill the space */
     border-radius: 5px;        /* Optional rounded corners */
 }
 
 .gallery-arrows {
     position: absolute;
-    top: 50%;
+    top: 50%;                  /* Center arrows vertically */
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%); /* Center arrows vertically */
+    justify-content: space-between; /* Space out arrows */
+    transform: translateY(-50%); /* Center arrows relative to their height */
+    z-index: 2;                /* Ensure arrows are above the image */
 }
 
 .arrow {
     cursor: pointer;
-    font-size: 24px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
+    font-size: 36px;          /* Increase font size for better visibility */
+    color: white;              /* Ensure the arrows are visible */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for visibility */
+    padding: 10px;            /* Padding for larger clickable area */
 }
+
 
 .dots-container {
     text-align: center;        /* Center the dots */
     margin-top: 10px;         /* Space above the dots */
-    margin-bottom: 10px;
 }
 
 .dot {
@@ -75,16 +77,16 @@
 /* Media query for responsive behavior */
 @media (max-width: 768px) {
     .gallery-container {
-        flex: 0 0 100%;         /* Full width on smaller screens */
-        margin: 0;              /* Remove margin for better responsiveness */
+        flex: 0 0 100%;        /* Full width on smaller screens */
+        margin: 0;             /* Remove margin for better responsiveness */
     }
 
     .gallery {
-        width: 100%;            /* Ensure gallery takes full width on smaller screens */
-        height: 300px;          /* Maintain fixed height for gallery */
+        width: 100%;           /* Ensure gallery takes full width on smaller screens */
+        height: 300px;         /* Maintain fixed height for gallery */
     }
 
     .gallery-image {
-        height: 100%;           /* Maintain fixed height */
+        height: 100%;          /* Maintain fixed height */
     }
 }
