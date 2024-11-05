@@ -44,13 +44,11 @@ strong {
 }
 
 
-/* Ensure lists have default styles */
 ul {
     padding-left: 20px; /* Add padding for default bullet alignment */
     margin: 20px 0;
 }
 
-/* List items */
 li {
     margin-bottom: 10px; /* Space between list items */
 }
@@ -132,7 +130,6 @@ li {
     padding: 0 15px;
 }
 
-/* Mobile Navigation */
 .hamburger-menu {
     display: none;
     position: absolute;
@@ -152,8 +149,6 @@ li {
 
 
 /* Content Sections */
-
-
 .featured-section {
     background-color: #f7f4ee; /* Hex equivalent of rgba(247, 244, 238, 1) */
     padding: 10px; /* Add some padding */
@@ -257,29 +252,20 @@ li {
 }
 
 
+.task-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+    color: #333;
+}
 
+.task-list li {
+    margin-bottom: 15px;
+    font-size: 1em;
+}
 
-      .content-section {
-        max-width: 80%;
-        margin: auto;
-        padding: 20px;
-    }
-    
-    
-    .task-list {
-        list-style-type: decimal;
-        padding-left: 20px;
-        color: #333;
-    }
-    
-    .task-list li {
-        margin-bottom: 15px;
-        font-size: 1em;
-    }
-
-    .task-list strong {
-        font-weight: 700;
-    }
+.task-list strong {
+    font-weight: 700;
+}
 
 
 /* Tablet  */
@@ -292,9 +278,15 @@ li {
 
 
     .column-container {
-        margin-left: 40px;
-        margin-right: 40px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
+
+
+  .column {
+    padding: 10px;
+  }
+
 
     .nav-menu a {
         font-size: 14px;
@@ -335,7 +327,7 @@ li {
         text-align: center; /* Center align for smaller screens */
     }
 
-    .footer .content {
+    .footer .content-section {
         flex-direction: column; /* Stack sections vertically */
         align-items: center; /* Center items */
     }
