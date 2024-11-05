@@ -46,3 +46,27 @@
           margin-right: 60px;
         }
       }
+
+
+
+      .content-section {
+        max-width: 80%;
+        margin: auto;
+        padding: 20px;
+    }
+    
+    
+    .task-list {
+        list-style-type: decimal;
+        padding-left: 20px;
+        color: #333;
+    }
+    
+    .task-list li {
+        margin-bottom: 15px;
+        font-size: 1em;
+    }
+
+    .task-list strong {
+        font-weight: 700;
+    }

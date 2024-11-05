@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adsandfer Properties</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/management.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="js/hamburger_menu.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script> window.onload = function(){ get_user(); } </script>  
+</head>
+
+<body>
+   
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo_transparent.png" alt="Logo">
+            <center><font color="#ffffff">Tenants</font></center>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <a href="management.html">Home</a>
+            <a href="tenants.html">Tenants</a>
+            <a href="properties.html">Properties</a>
+            <a href="maintenance.html">Maintenance</a>
+            <a href="finances.html">Finances</a>
+            <a href="legal.html">Legal</a>
+            <a href="index.html">Public Site</a>
+        </nav>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-section">
+            <h1>Tenant Directory</h1>
+            
+            <iframe 
+                src="https://docs.google.com/spreadsheets/d/1oNw70nNrpY4cdi6PaSUZWNWFDRyx1lxUReT-ueDbDsw/edit?usp=sharing"
+                width="100%" 
+                height="600" 
+                frameborder="0" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="content-section">
+            <h1>Getting a New Tenant</h1>
+            <ol class="task-list">
+                <li>
+                    <strong>Prepare the Unit:</strong> Inspect, clean, paint, and repair any damage as needed (see 
+                    <a href="/view/adsandfer-management/maintenance">maintenance contractors</a>).
+                </li>
+                <li>
+                    <strong>Set Rent Price:</strong> Research similar units to determine a fair rental price.
+                </li>
+                <li>
+                    <strong>Create a Listing:</strong> Include unit details, photos, and a link to the 
+                    <a href="https://forms.gle/BKnwgA3SHBtwU6Kh6" target="_blank">Request Showing Form</a>.
+                </li>
+                <li>
+                    <strong>Advertise:</strong> Post on 
+                    <a href="https://www.kijiji.ca" target="_blank">Kijiji</a>, 
+                    <a href="https://www.facebook.com/marketplace" target="_blank">Facebook Marketplace</a>, 
+                    <a href="https://rentals.ca" target="_blank">Rentals.ca</a>, 
+                    <a href="https://www.zillow.com" target="_blank">Zillow</a>, 
+                    <a href="https://www.rentfaster.ca" target="_blank">RentFaster.ca</a>, local classifieds, community boards, or use a physical sign.
+                </li>
+                <li>
+                    <strong>Showings:</strong> Schedule times for prospective tenants to view the unit.
+                </li>
+                <li>
+                    <strong>Screen Applicants:</strong> Use background and reference checks to assess potential tenants (see 
+                    <a href="/view/adsandfer-management/application-process">application process</a>).
+                </li>
+                <li>
+                    <strong>Sign Lease:</strong> Once approved, finalize the lease agreement with the new tenant.
+                </li>
+                <li>
+                    <strong>Move-in Inspection:</strong> Conduct an inspection on the move-in day and document the unit’s condition.
+                </li>
+            </ol>
+        
+
+        </div>
+
+        <div class="content-section">
+            <h2>Links</h2>
+            <ul style="list-style-type: square; padding-left: 15px;">
+              <li><a href="https://docs.google.com/document/d/12rbyxu72lj-9BESyWLpc4jwx4d0BB8UQYKhFF_yCpZw/edit?usp=sharing" target="_blank">Sample listing</a></li>
+              <li><a href="https://forms.gle/BKnwgA3SHBtwU6Kh6" target="_blank">Request viewing form</a></li>
+              <li><a href="https://forms.gle/7eFp9cYVTuLH2EiS6" target="_blank">Rental Application</a></li>
+              <li><a href="https://app.frontlobby.com/tenant-screening" target="_blank">Tenant Screening Service</a></li>
+              <li><a href="https://drive.google.com/file/d/12dfmyYh1_zbT_vWDVItRkde2Ooj_Thq6/view?usp=drive_link" target="_blank">Lease agreement</a></li>
+              <li><a href="https://sites.google.com/view/adsandfer/tenant-handbook" target="_blank">Welcome letter</a></li>
+            </ul>
+        </div>
+                  
+    
+        <footer class="footer">
+            <div class="content">
+                
+                <div>
+                    <p>
+                        Logged in as <b><span id="member_email"></span></b>
+                        
+                    </p>
+                    <p>
+                        <a href="javascript:void(0);" class="open-modal-link" onclick="sign_out();">Sign out</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        
+                            
+        
+    </main>
+</body>
+</html>
