@@ -14,6 +14,7 @@ async function get_user(home) {
         email = result[0].getValue();
         console.log("Logged in user:" + email);
         document.getElementById('member_email').innerHTML = email;
+        document.body.classList.remove('invisible');
         
       });
     });

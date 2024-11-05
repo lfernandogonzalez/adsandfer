@@ -16,10 +16,11 @@
     <script src="js/amazon-cognito-identity.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
+    <link rel="stylesheet" href="css/modal.css">
     <script> window.onload = function(){ get_user(); } </script>  
 </head>
 
-<body>
+<body class="invisible">
    
     <header class="header">
         <div class="logo">
@@ -45,14 +46,114 @@
     <main>
         <div class="content-section">
             <h1>Tenant Directory</h1>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Unit</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Email Address</th>
+                            <th>Lease Start</th>
+                            <th>Lease End</th>
+                            <th>Deposit</th>
+                            <th>Rent</th>
+                            <th>Electricity Included</th>
+                            <th>Lease</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>100 Brockville</td>
+                            <td>1</td>
+                            <td>Dhesi Cheema & Jaswinder Manmeet</td>
+                            <td></td>
+                            <td></td>
+                            <td>2024/07/01</td>
+                            <td>2024/12/31</td>
+                            <td>$0.00</td>
+                            <td>$2,107.67</td>
+                            <td>Y</td>
+                            <td><a href="https://drive.google.com/file/d/13X2Pm2jfyTaa-yfNQEaW48OuNF8ILyrt/view?usp=sharing">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>100 Brockville</td>
+                            <td>2</td>
+                            <td>Renee Gummer</td>
+                            <td></td>
+                            <td></td>
+                            <td>2014/11/18</td>
+                            <td>2015/1/1</td>
+                            <td>$0.00</td>
+                            <td>$845.63</td>
+                            <td>Y</td>
+                            <td><a href="https://drive.google.com/file/d/13EmahfoaPT3a_0DdeTCFoOebnwf86C5k/view?usp=sharing">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>100 Brockville</td>
+                            <td>3</td>
+                            <td>Ashley Thurston & Emily Thurston</td>
+                            <td></td>
+                            <td></td>
+                            <td>2023/09/01</td>
+                            <td>2024/08/31</td>
+                            <td>$2,100.00</td>
+                            <td>$2,100.00</td>
+                            <td></td>
+                            <td><a href="https://drive.google.com/file/d/13Eq3FmLz4A14jR9ripCT1OlNXaQuxhHR/view?usp=sharing">PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
-            <iframe 
-                src="https://docs.google.com/spreadsheets/d/1oNw70nNrpY4cdi6PaSUZWNWFDRyx1lxUReT-ueDbDsw/edit?usp=sharing"
-                width="100%" 
-                height="600" 
-                frameborder="0" 
-                allowfullscreen>
-            </iframe>
+            
+            <!-- Add Tenant 
+            <p><a href="javascript:void(0);" class="open-modal-link" onclick="openModal(event)">+ Add Tenant</a></p>
+            
+            <div class="modal-overlay" id="modalOverlay"></div>
+                <div class="modal" id="modal">
+
+                    <h3>Add Tenant</h3>
+                <p>
+                    <b>Property:</b>
+                    <br><input class="input" id="add_tenant_address" type="text" placeholder="Address">
+                    <br><input class="input" id="add_tenant_unit" type="text" placeholder="Unit">
+                </p>
+    
+                <p>
+                    <b>Name:</b>
+                    <br><input class="input" id="add_tenant_first_name" type="text" Placeholder="First Name">
+                    <br><input class="input" id="add_tenant_last_name" type="text"  Placeholder="Last Name">  
+                </p>
+
+                <p>
+                    <b>Contact:</b>
+                    <br><input class="input" id="add_tenant_email" type="text" placeholder="Email address">
+                    <br><input class="input" id="add_tenant_phone_number" type="text" Placeholder="Phone number" >
+                </p>
+                
+                <p>    
+                    <b>Lease term:</b>
+                    <br><input class="input" id="add_tenant_lease_start" type="text" Placeholder="Start" >
+                    <br><input class="input" id="add_tenant_lease_end" type="text" Placeholder="End" >
+                </p>
+
+                <p>    
+                    <b>Notes:</b>
+                    <br><input class="input" id="add_tenant_notes" type="text" Placeholder="" >
+                </p>
+               
+    
+                <input class="button" type="button" onclick="add_member();" value="Add member">
+                <input class="button" type="button" onclick="closeModal()" style="background-color: tomato" value="Cancel">
+    
+
+                </div>
+                <script src="js/modal.js"></script>
+                    
+            </div>
+            -->
         </div>
 
         <div class="content-section">
