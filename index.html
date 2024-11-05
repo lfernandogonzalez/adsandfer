@@ -12,6 +12,11 @@
     <script src="js/hamburger_menu.js"></script>
     <script src="js/gallery.js"></script>
     <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </head>
 
 <body>
@@ -103,6 +108,23 @@
                 </div>
             </div>
         </div>
+
+
+
+<!-- Management Login Modal -->
+<div class="modal-overlay" id="modalOverlay"></div>
+<div class="modal" id="modal">
+  
+    <form>
+        <h1>Management Sign in</h1>
+        <input class="input" type="text" id="sign_in_email" placeholder="Email address" required autofocus>
+        <br><input class="input"  id="sign_in_password" type="password" placeholder="Password" required>
+        <p><button  type="button" class="button" onclick="sign_in();">Sign in</button> <button type="button" class="button" onclick="closeModal()">Cancel</button></p>
+        <p><a href="https://adsandfer.auth.us-east-1.amazoncognito.com/forgotPassword?client_id=oronbc9rqqtsamf8a60ndf6vd&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fmanagement.html">Forgot password?</a></p>
+        </form>
+  
+</div>
+<script src="js/modal.js"></script>
         
         <footer class="footer">
             <div class="content">
@@ -116,7 +138,7 @@
                         <span><a href="http://www.facebook.com/adsandferproperties">/adsandfer</a></span>
                     </p>
                     <p>
-                        <a href="https://adsandfer.auth.us-east-1.amazoncognito.com/login?client_id=oronbc9rqqtsamf8a60ndf6vd&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fmanagement.html"><img src="img/admin.png"  class="icon">Management Site</a>
+                        <a href="javascript:void(0);" class="open-modal-link" onclick="openModal(event)"><img src="img/admin.png"  class="icon">Management Site</a>
                     </p>
                 </div>
             </div>

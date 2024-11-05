@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adsandfer Properties</title>
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/management.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="js/hamburger_menu.js"></script>
     <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
     <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
-
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
-    
+    <script> window.onload = function(){ get_user(); } </script>  
 </head>
 
 <body>
@@ -26,13 +28,12 @@
         </div>
         <nav class="nav-menu" id="navMenu">
             <a href="index.html">Home</a>
-            <a href="tenant_handbook.html">Tenants</a>
-            <a href="tenant_handbook.html">Properties</a>
-            <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">Maintenance</a>
-            <a href="tenant_handbook.html">Finance</a>
-            <a href="tenant_handbook.html">Legal</a>
-            <a href="tenant_handbook.html">Public Site</a>
-            <a href="tenant_handbook.html">Log out</a>
+            <a href="tenants.html">Tenants</a>
+            <a href="properties.html">Properties</a>
+            <a href="maintenance.html">Maintenance</a>
+            <a href="finances.html">Finances</a>
+            <a href="legal.html">Legal</a>
+            <a href="index.html">Public Site</a>
         </nav>
         <div class="hamburger-menu" onclick="toggleMenu()">
             <span></span>
@@ -41,25 +42,65 @@
         </div>
     </header>
 
-
-
-
     <main>
         
+        <div class="container">
+            
+            <div class="column">
+              <a href="tenants.html">
+                <img src="img/tenants.png">
+                <p>Tenants</p>
+              </a>
+            </div>
         
+            <div class="column">
+              <a href="properties.html">
+                <img src="img/properties.png">
+                <p>Properties</p>
+              </a>
+            </div>
+
+            <div class="column">
+                <a href="maintenance.html">
+                  <img src="img/maintenance_request.png">
+                  <p>Maintenance</p>
+                </a>
+            </div>
+
+            <div class="column">
+                <a href="finances.html">
+                  <img src="img/finances.png">
+                  <p>Finances</p>
+                </a>
+            </div>
+
+            <div class="column">
+                <a href="legal.html">
+                  <img src="img/legal.jpg">
+                  <p>Legal</p>
+                </a>
+            </div>
+
+            <div class="column">
+                <a href="index.html">
+                  <img src="img/public_website.png">
+                  <p>Legal</p>
+                </a>
+            </div>
+
+          </div>
+
+    
         <footer class="footer">
             <div class="content">
-                <div>
-                    <p>Adsandfer Properties &copy; 2025</p>
-                    <p><a href="mailto:adsandferproperties@gmail.com">adsandferproperties@gmail.com</a></p>
-                </div>
+                
                 <div>
                     <p>
-                        <a href="https://www.facebook.com/adsandferproperties" target="_blank"> <img src="img/facebook.png" class="icon"></a>
-                        <span><a href="http://www.facebook.com/adsandferproperties">/adsandfer</a></span>
+                        Logged in as <b><span id="member_email"></span></b>
+                        
                     </p>
                     <p>
-                        <a href="https://adsandfer.auth.us-east-1.amazoncognito.com/login?client_id=oronbc9rqqtsamf8a60ndf6vd&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fmanagement.html"><img src="img/admin.png"  class="icon">Management Site</a>
+                        <a href="javascript:void(0);" class="open-modal-link" onclick="sign_out();">Sign out</a>
                     </p>
                 </div>
             </div>
