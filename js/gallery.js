@@ -1,13 +1,4 @@
-const images = [
-    "100_Brockville/Building.jpg",
-    "100_Brockville/aereal_1.jpg",
-    "100_Brockville/aereal_2.jpg",
-    "100_Brockville/aereal_3.jpg",
-    "100_Brockville/unit_1-blueprint.jpg",
-    "100_Brockville/unit_1-kitchen.jpg",
-    "100_Brockville/unit_1-bathroom.jpg",
-    "100_Brockville/unit_1-laundry.jpg"
-];
+
 
 let currentIndex = 0;
 

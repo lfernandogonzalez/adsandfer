@@ -16,6 +16,8 @@
     <script src="js/amazon-cognito-identity.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/gallery.js"></script>
+    <link rel="stylesheet" href="css/gallery.css">
     <script> window.onload = function(){ get_user(); } </script>  
 </head>
 
@@ -24,7 +26,7 @@
     <header class="header">
         <div class="logo">
             <img src="img/logo_transparent.png" alt="Logo">
-            <center><font color="#ffffff">Management Site</font></center>
+            <center><font color="#ffffff">Portfolio</font></center>
         </div>
         <nav class="nav-menu" id="navMenu">
             <a href="management.html">Home</a>
@@ -44,51 +46,64 @@
 
     <main>
         
-        <div class="column-container">
-            
-            <div class="column">
-              <a href="tenants.html">
-                <img src="img/tenants.png">
-                <h3>Tenants</h3>
-              </a>
-            </div>
         
-            <div class="column">
-              <a href="properties.html">
-                <img src="img/properties.png">
-                <h3>Properties</h3>
-              </a>
-            </div>
+        <div class="content-section">
+            <div id="table-of-contents">
+                <h1>Contractors</h1>
+                <p id="toc-links"></p> <!-- JavaScript will populate this -->
+              </div>
 
-            <div class="column">
-                <a href="maintenance.html">
-                  <img src="img/maintenance_request.png">
-                  <h3>Maintenance</h3>
-                </a>
-            </div>
+            <h2>Appliance</h2>
+            <p></p>
 
-            <div class="column">
-                <a href="finances.html">
-                  <img src="img/finances.png">
-                  <h3>Finances</h3>
-                </a>
-            </div>
+            <h2>Cleaning</h2>
+            <p></p>
 
-            <div class="column">
-                <a href="legal.html">
-                  <img src="img/legal.jpg">
-                  <h3>Legal</h3>
-                </a>
-            </div>
+            <h2>Drywall</h2>
+            <p></p>
 
-            <div class="column">
-                <a href="index.html">
-                  <img src="img/public_website.png">
-                  <h3>Public Sit</h3>
-                </a>
-            </div>
+            <h2>Electrical</h2>
+            <p></p>
 
-          </div>
+            <h2>Flooring</h2>
+            <p></p>
+
+            <h2>Heating</h2>
+            <p></p>
+
+            <h2>Inspection</h2>
+            <ul>
+                <li><b>Steve Ott</b>
+                    <br>(613) 724-0868
+                    <br>steve@ovhi.ca
+                    <br><a href="http://www.ovhi.ca" target="_blank">www.ovhi.ca</a>
+                </li>
+            </ul>
+
+            <h2>Masonry</h2>
+            <p></p>
+
+            <h2>Locksmith</h2>
+            <p></p>
+
+            <h2>Landscape</h2>
+            <p></p>
+
+            <h2>Painter</h2>
+            <p></p>
+
+            <h2>Plumbing</h2>
+            <p></p>
+
+            <h2>Pest Control</h2>
+            <p></p>
+
+            <h2>Roofing</h2>
+            <p></p>
+            <script src="js/table_of_contents.js"></script>
+
+        </div>
+
 
     
         <footer class="footer">

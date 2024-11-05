@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adsandfer Properties</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/management.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="js/hamburger_menu.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/gallery.js"></script>
+    <link rel="stylesheet" href="css/gallery.css">
+    <script> window.onload = function(){ get_user(); } </script>  
+</head>
+
+<body>
+   
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo_transparent.png" alt="Logo">
+            <center><font color="#ffffff">Portfolio</font></center>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <a href="management.html">Home</a>
+            <a href="tenants.html">Tenants</a>
+            <a href="properties.html">Properties</a>
+            <a href="maintenance.html">Maintenance</a>
+            <a href="finances.html">Finances</a>
+            <a href="legal.html">Legal</a>
+            <a href="index.html">Public Site</a>
+        </nav>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        
+        
+        <div class="content-section">
+            <h1>100 Brockville Street, Smith Falls</h1>
+            <div class="content-left">
+                <div class="gallery-container">
+                    <div class="gallery">
+                        <a id="imageLink" href="" target="_blank" class="gallery-link">
+                            <img id="galleryImage" src="" class="gallery-image" alt="Gallery Image">
+                        </a>
+                        <div class="gallery-arrows">
+                            <span class="arrow left-arrow" onclick="changeImage(-1)">&#10094;</span>
+                            <span class="arrow right-arrow" onclick="changeImage(1)">&#10095;</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dots-container" id="dotsContainer"></div>
+
+                    <script>
+                        const images = [
+                            "100_Brockville/Building.jpg",
+                            "100_Brockville/aereal_1.jpg",
+                            "100_Brockville/aereal_2.jpg",
+                            "100_Brockville/aereal_3.jpg",
+                            "100_Brockville/aereal_4.jpg",
+                            "100_Brockville/unit_1-blueprint.jpg",
+                            "100_Brockville/unit_1-kitchen.jpg",
+                            "100_Brockville/unit_1-bathroom.jpg",
+                            "100_Brockville/unit_1-laundry.jpg"
+                        ];
+                    </script>
+                </div>
+                
+                <div class="content-right">
+                Brick triplex features 3 Residential units:
+                    <ul>
+                        <li>Unit 1: 2 bedrooms, 1 bath, insuite laundry, main level.</li>
+                        <li>Unit 2: 1 bedroom, 1 bath, upper level.</li>
+                        <li>Unit 3:  3 bed + den, 1 bath, two-stories.</li>
+                    </ul>
+                    <p>Units 1 and 3 have been completely renovated since 2021, showcasing beautiful new kitchens and bathrooms. Updated electrical systems and new plumbing throughout the building. Purchased November 2024. </p>
+
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="content-section">
+            
+            <h2>Map</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14102.219407868719!2d-76.019747!3d44.89624!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccd88a96ac08383%3A0x780720a4f2c74cd8!2s100%20Brockville%20St%2C%20Smiths%20Falls%2C%20ON%20K7A%203Y2%2C%20Canada!5e1!3m2!1sen!2sus!4v1730822180142!5m2!1sen!2sus" 
+                width="100%" height="300" style="border:0; padding:0 20 20 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
+            <h2>Files</h2>
+            <ul>
+                <li><a href="https://drive.google.com/drive/folders/1-MrOfM8oU5o_CajA_Ni9xdyJaNDS7o9C?usp=sharing">Drive folder</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1vMYqLsdCEHR4BEIcgjWWwCMXQ1ipdjyo?usp=sharing">Bills</a></li>
+                <li><a href="https://drive.google.com/drive/folders/12hGbhEXfSJJ_DwtV-nTdz1VEZwKECjoO?usp=sharing">Leases</a></li>
+                <li><a href="https://drive.google.com/drive/folders/11v6oAbpCtSMBiOiegpJAUtDsb9vLOZ_M?usp=sharing">Pictures</a></li>
+                <li><a href="https://drive.google.com/drive/folders/13ZdIwNER-exoNiOIohKUZ0jt0_3V-uO2?usp=sharing">Purchase documents</a></li>
+            </ul>
+        </div>
+
+       
+        <div class="content-section">
+            <h1>Real Estate Agents</h1>
+            <br><br>
+            <div class="content-left">
+                <img src="img/jenna.jpg" width="200">
+                
+                
+                <div class="content-right">
+                    <b>Jenna Swimwood</b>
+                    <br>(613) 915-6461
+                    <br>jenna@jennaandco.com
+                    <br>www.jennaandco.com
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="content-left">
+                <img src="img/austin.jpg" width="200">
+                
+                
+                <div class="content-right">
+                    <b>Austin Cranney</b>
+                    <br>(613) 323 - 1222 
+                    <br>austin@jennaandco.com
+                    <br>www.jennaandco.com
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="content-section">
+            
+            <h1>Links</h1>
+            <ul>
+                <li><a href="https://docs.google.com/spreadsheets/d/145LzCsgLMcA6_BAiv1B0s4J8V5z8jAbG8jNDqbZqgGo/edit?gid=1823031743#gid=1823031743">Invesment property calculator</a></li>
+            </ul>
+        </div>
+
+    
+        <footer class="footer">
+            <div class="content">
+                
+                <div>
+                    <p>
+                        Logged in as <b><span id="member_email"></span></b>
+                        
+                    </p>
+                    <p>
+                        <a href="javascript:void(0);" class="open-modal-link" onclick="sign_out();">Sign out</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        
+                            
+        
+    </main>
+</body>
+</html>

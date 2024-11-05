@@ -1,74 +1,4 @@
 
-.welcome-section,
-.featured-properties,
-.tenant-resources {
-    width: 100%; /* Make sections full width for background color */
-}
-
-.welcome-section {
-    background-color: white; /* White background */
-    padding: 20px; /* Add some padding */
-    text-align: left; /* Left-align text */
-}
-
-
-.welcome-section h1 {
-    margin-bottom: 10px; /* Space between header and paragraph */
-}
-
-.featured-properties {
-    background-color: #f7f4ee; /* Hex equivalent of rgba(247, 244, 238, 1) */
-    padding: 20px; /* Add some padding */
-}
-
-.property-list {
-    display: flex; /* Create a flex container for side-by-side layout */
-    justify-content: space-between; /* Space out items */
-    align-items: flex-start; /* Align items at the start */
-}
-
-
-.property-description {
-    flex: 1; /* Allow this to grow and fill space */
-    padding-left: 20px; /* Space between image and text */
-}
-
-.tenant-resources {
-    background-color: white; /* White background */
-    padding: 20px; /* Add some padding */
-}
-
-.resource-columns {
-    display: flex; /* Use flexbox for columns */
-    justify-content: space-around; /* Evenly space columns */
-    align-items: flex-start; /* Align items at the start */
-}
-
-.resource-item {
-    text-align: center; /* Center text under images */
-    flex: 1; /* Allow each item to grow */
-    max-width: 30%; /* Restrict max width for each column */
-    margin: 0 10px; /* Margin between columns */
-}
-.resource-item img {
-    height: 300px; /* Set height for all resource images */
-    width: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the area without distortion */
-    max-width: 100%; /* Make images responsive */
-}
-
-
-.tenant-resources h1 {
-    margin-bottom: 20px; /* Space below the title */
-}
-
-.tenant-resources .resource-columns {
-    display: flex;
-    justify-content: space-around; /* Space out items evenly */
-    align-items: center; /* Center items vertically */
-    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
-    gap: 20px; /* Adds spacing between columns */
-}
 
 /* Tablets */
 @media (max-width: 768px) {
@@ -78,15 +8,4 @@
         flex-direction: column; /* Stack items on smaller screens */
     }
 
-    .resource-columns {
-        flex-direction: column; /* Stack columns on smaller screens */
-    }
-
-    .resource-item {
-        max-width: 100%; /* Allow full width for resource items */
-    }
-
-    .tenant-resources .resource-columns {
-        justify-content: center; /* Center align columns on tablets */
-    }
 }

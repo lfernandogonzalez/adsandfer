@@ -42,17 +42,16 @@
 
 
     <main>
-        <div class="welcome-section">
-            <div class="content">
+
+        <div class="content-section">
                 <h1>Welcome</h1>
                 <p>Our goal is simple: provide you with spaces that feel like home. We offer well-kept properties and hands-on management to make renting easy, comfortable, and convenient.</p>
-            </div>
         </div>
         
-        <div class="featured-properties">
-            <div class="content">
+        <div class="featured-section">
+            <div class="content-section">
                 <h2>Featured Rentals</h2>
-                <div class="property-list">
+                <div class="content-left">
                     <div class="gallery-container">
                         <div class="gallery">
                             <a id="imageLink" href="" target="_blank" class="gallery-link">
@@ -65,12 +64,25 @@
                         </div>
                         
                         <div class="dots-container" id="dotsContainer"></div>
+
+                        <script>
+                            const images = [
+                                "100_Brockville/Building.jpg",
+                                "100_Brockville/aereal_1.jpg",
+                                "100_Brockville/aereal_2.jpg",
+                                "100_Brockville/aereal_3.jpg",
+                                "100_Brockville/unit_1-blueprint.jpg",
+                                "100_Brockville/unit_1-kitchen.jpg",
+                                "100_Brockville/unit_1-bathroom.jpg",
+                                "100_Brockville/unit_1-laundry.jpg"
+                            ];
+                        </script>
                     </div>
                     
-                    <div class="property-description">
+                    <div class="content-right">
                         <h3>100 Brockville, Smith Falls</h3>
                         <p>
-                            Comfortable <strong>2-bedroom, 1-bathroom</strong> main floor unit in picturesque brick triplex at the heart of Smiths Falls. Newly renovated kitchen and bathroom, complete with modern fixtures and finishes, plus the convenience of in-suite laundry. The living room features hardwood floors and a large window that fills the space with natural light. Have your morning coffee on the deck off the main bedroom. 
+                            Comfortable <strong>2-bedroom, 1-bathroom</strong> main floor unit in picturesque brick triplex at the heart of Smiths Falls. Newly renovated kitchen and bathroom, complete with modern fixtures and finishes, plus the convenience of in-suite laundry. The living room features hardwood floors and a large window that fills the space with natural light. Main bedroom also offers a private entrance and access to the back deck. 
                         </p>
                         <p>
                             Fantastic location! Walking distance of all the charming shops and restaurants in Downtown Smiths Falls, along with scenic Victoria Park by the canal and Settler’s Ridge Mall. $2000/month + Hydro. Free on-site parking. Available Jan 1st, 2025.
@@ -83,51 +95,51 @@
             </div>
         </div>
 
-        <div class="tenant-resources">
-            <div class="content">
-                <h2>Tenant Resources</h2>
-                <div class="resource-columns">
-                    <div class="resource-item">
-                        <a href="tenant_handbook.html">
-                            <img src="img/tenant_handbook.png" alt="Tenant Handbook">
-                            <h3>Tenant Handbook</h3>
-                        </a>
-                    </div>
-                    <div class="resource-item">
-                        <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">
-                            <img src="img/maintenance_request.png" alt="Maintenance Request">
-                            <h3>Maintenance Request</h3>
-                        </a>
-                    </div>
-                    <div class="resource-item">
-                        <a href="pay_rent.html">
-                            <img src="img/pay_rent.jpg" alt="Pay Rent">
-                            <h3>Pay Rent</h3>
-                        </a>
-                    </div>
+        
+        <div class="content-section">
+            <h2>Tenant Resources</h2>
+            <div class="column-container">
+                <div class="column">
+                    <a href="tenant_handbook.html">
+                        <img src="img/tenant_handbook.png" alt="Tenant Handbook">
+                        <h3>Tenant Handbook</h3>
+                    </a>
+                </div>
+                <div class="column">
+                    <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">
+                        <img src="img/maintenance_request.png" alt="Maintenance Request">
+                        <h3>Maintenance Request</h3>
+                    </a>
+                </div>
+                <div class="column">
+                    <a href="pay_rent.html">
+                        <img src="img/pay_rent.jpg" alt="Pay Rent">
+                        <h3>Pay Rent</h3>
+                    </a>
                 </div>
             </div>
         </div>
-
-
-
-<!-- Management Login Modal -->
-<div class="modal-overlay" id="modalOverlay"></div>
-<div class="modal" id="modal">
-  
-    <form>
-        <h1>Management Sign in</h1>
-        <input class="input" type="text" id="sign_in_email" placeholder="Email address" required autofocus>
-        <br><input class="input"  id="sign_in_password" type="password" placeholder="Password" required>
-        <p><button  type="button" class="button" onclick="sign_in();">Sign in</button> <button type="button" class="button" onclick="closeModal()">Cancel</button></p>
-        <p><a href="https://adsandfer.auth.us-east-1.amazoncognito.com/forgotPassword?client_id=oronbc9rqqtsamf8a60ndf6vd&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fmanagement.html">Forgot password?</a></p>
-        </form>
-  
-</div>
-<script src="js/modal.js"></script>
         
+
+
+
+        <!-- Management Login Modal -->
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal" id="modal">
+        
+            <form>
+                <h1>Management Sign in</h1>
+                <input class="input" type="text" id="sign_in_email" placeholder="Email address" required autofocus>
+                <br><input class="input"  id="sign_in_password" type="password" placeholder="Password" required>
+                <p><button  type="button" class="button" onclick="sign_in();">Sign in</button> <button type="button" class="button" onclick="closeModal()">Cancel</button></p>
+                <p><a href="https://adsandfer.auth.us-east-1.amazoncognito.com/forgotPassword?client_id=oronbc9rqqtsamf8a60ndf6vd&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fmanagement.html">Forgot password?</a></p>
+                </form>
+        
+        </div>
+        <script src="js/modal.js"></script>
+
         <footer class="footer">
-            <div class="content">
+            <div class="content-section">
                 <div>
                     <p>Adsandfer Properties &copy; 2025</p>
                     <p><a href="mailto:adsandferproperties@gmail.com">adsandferproperties@gmail.com</a></p>
@@ -143,7 +155,7 @@
                 </div>
             </div>
         </footer>
-        
+
                             
         
     </main>

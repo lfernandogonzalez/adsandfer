@@ -57,7 +57,8 @@
 
 .dots-container {
     text-align: center;        /* Center the dots */
-    margin-top: 10px;         /* Space above the dots */
+    margin-top: 10px;         
+    margin-bottom: 10px;         
 }
 
 .dot {
