@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adsandfer Properties</title>
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/management.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,6 +110,30 @@
             
             
             
+
+            <div class="table-container" id="all_tenants">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Unit</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Email Address</th>
+                            <th>Lease Start</th>
+                            <th>Lease End</th>
+                            <th>Deposit</th>
+                            <th>Rent</th>
+                            <th>Electricity Included</th>
+                            <th>Lease</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
             <p><a href="javascript:void(0);" class="open-modal-link" onclick="open_add_tenant()">+ Add Tenant</a></p>
             
             <div class="modal-overlay" id="add_tenant_modal"></div>
@@ -129,7 +154,7 @@
 
                 <p>
                     <b>Contact:</b>
-                    <br><input class="input" id="add_tenant_email" type="text" placeholder="Email address">
+                    <br><input class="input" id="add_tenant_tenant_email" type="text" placeholder="Email address">
                     <br><input class="input" id="add_tenant_phone_number" type="text" Placeholder="Phone number" >
                 </p>
                 
