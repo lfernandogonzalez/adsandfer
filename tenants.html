@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adsandfer Properties</title>
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/add_tenant_modal.css">
     <link rel="stylesheet" href="css/management.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,72 +46,13 @@
 
     <main>
         <div class="content-section">
+
+
             <h1>Tenant Directory</h1>
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Unit</th>
-                            <th>Name</th>
-                            <th>Phone Number</th>
-                            <th>Email Address</th>
-                            <th>Lease Start</th>
-                            <th>Lease End</th>
-                            <th>Deposit</th>
-                            <th>Rent</th>
-                            <th>Electricity Included</th>
-                            <th>Lease</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>100 Brockville</td>
-                            <td>1</td>
-                            <td>Dhesi Cheema & Jaswinder Manmeet</td>
-                            <td></td>
-                            <td></td>
-                            <td>2024/07/01</td>
-                            <td>2024/12/31</td>
-                            <td>$0.00</td>
-                            <td>$2,107.67</td>
-                            <td>Y</td>
-                            <td><a href="https://drive.google.com/file/d/13X2Pm2jfyTaa-yfNQEaW48OuNF8ILyrt/view?usp=sharing">PDF</a></td>
-                        </tr>
-                        <tr>
-                            <td>100 Brockville</td>
-                            <td>2</td>
-                            <td>Renee Gummer</td>
-                            <td></td>
-                            <td></td>
-                            <td>2014/11/18</td>
-                            <td>2015/1/1</td>
-                            <td>$0.00</td>
-                            <td>$845.63</td>
-                            <td>Y</td>
-                            <td><a href="https://drive.google.com/file/d/13EmahfoaPT3a_0DdeTCFoOebnwf86C5k/view?usp=sharing">PDF</a></td>
-                        </tr>
-                        <tr>
-                            <td>100 Brockville</td>
-                            <td>3</td>
-                            <td>Ashley Thurston & Emily Thurston</td>
-                            <td></td>
-                            <td></td>
-                            <td>2023/09/01</td>
-                            <td>2024/08/31</td>
-                            <td>$2,100.00</td>
-                            <td>$2,100.00</td>
-                            <td></td>
-                            <td><a href="https://drive.google.com/file/d/13Eq3FmLz4A14jR9ripCT1OlNXaQuxhHR/view?usp=sharing">PDF</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            
             
 
             <div class="table-container" id="all_tenants">
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -124,8 +65,8 @@
                             <th>Lease End</th>
                             <th>Deposit</th>
                             <th>Rent</th>
-                            <th>Electricity Included</th>
-                            <th>Lease</th>
+                            <th>Utilities</th>
+                            <th>Contract</th>
                             <th>Notes</th>
                         </tr>
                     </thead>
@@ -136,62 +77,149 @@
 
             <p><a href="javascript:void(0);" class="open-modal-link" onclick="open_add_tenant()">+ Add Tenant</a></p>
             
-            <div class="modal-overlay" id="add_tenant_modal"></div>
-                <div class="modal" id="modal">
+            <div class="modal-overlay" id="modal_overlay"></div>
+            
+            <div class="modal" id="add_tenant_modal">
+                <h3>Add Tenant</h3>
+                <br>
+                <div class="modal-content">
+                    <div class="name">
+                        <b>Name:</b>
+                        <input class="input" id="add_tenant_first_name" type="text" placeholder="First Name">
+                        <br><input class="input" id="add_tenant_last_name" type="text" placeholder="Last Name">
+                    </div>
 
-                    <h3>Add Tenant</h3>
-                <p>
-                    <b>Property:</b>
-                    <br><input class="input" id="add_tenant_address" type="text" placeholder="Address">
-                    <br><input class="input" id="add_tenant_unit" type="text" placeholder="Unit">
-                </p>
-    
-                <p>
-                    <b>Name:</b>
-                    <br><input class="input" id="add_tenant_first_name" type="text" Placeholder="First Name">
-                    <br><input class="input" id="add_tenant_last_name" type="text"  Placeholder="Last Name">  
-                </p>
+                    <div class="contact">
+                        <b>Contact:</b>
+                        <input class="input" id="add_tenant_tenant_email" type="text" placeholder="Email address">
+                        <br><input class="input" id="add_tenant_phone_number" type="text" placeholder="Phone number">
+                    </div>
 
-                <p>
-                    <b>Contact:</b>
-                    <br><input class="input" id="add_tenant_tenant_email" type="text" placeholder="Email address">
-                    <br><input class="input" id="add_tenant_phone_number" type="text" Placeholder="Phone number" >
-                </p>
-                
-                <p>    
-                    <b>Lease term:</b>
-                    <br><input class="input" id="add_tenant_lease_start" type="text" Placeholder="Start" >
-                    <br><input class="input" id="add_tenant_lease_end" type="text" Placeholder="End" >
-                </p>
+                    <div class="property">
+                        <b>Property:</b>
+                        <input class="input" id="add_tenant_address" type="text" placeholder="Address">
+                        <br><input class="input" id="add_tenant_appartment" type="text" placeholder="Appartment">
+                    </div>
 
-                <p>    
-                    <b>Notes:</b>
-                    <br><input class="input" id="add_tenant_notes" type="text" Placeholder="" >
-                </p>
-               
-    
+                    <div class="lease">
+                        <b>Lease term:</b>
+                        <input class="input" id="add_tenant_lease_start" type="text" placeholder="Start">
+                        <br><input class="input" id="add_tenant_lease_end" type="text" placeholder="End">
+                    </div>
+
+                    <div class="rent">
+                        <b>Rent:</b>
+                        <input class="input" id="add_tenant_deposit" type="text" placeholder="Deposit">
+                        <br><input class="input" id="add_tenant_monthly" type="text" placeholder="Monthly">
+                    </div>
+
+                    <div class="utilities">
+                        <b>Utilities:</b>
+                        <label><input type="checkbox" id="add_tenant_water"> Water</label>
+                        <label><input type="checkbox" id="add_tenant_electricity"> Electricity</label>
+                        <label><input type="checkbox" id="add_tenant_hydro"> Hydro</label>
+                        <label><input type="checkbox" id="add_tenant_gas"> Gas</label>
+                        <label><input type="checkbox" id="add_tenant_heat"> Heat</label>
+                    </div>
+                    
+
+
+                    <div class="contract">
+                        <b>Contract:</b>
+                        <input class="input" id="add_tenant_contract" type="text" placeholder="URL">
+                    </div>
+
+
+                    <div class="notes">
+                        <b>Notes:</b>
+                        <textarea class="input" id="add_tenant_notes" placeholder="Additional Notes"></textarea>
+                    </div>
+                </div>
+
                 <input class="button" type="button" onclick="add_tenant();" value="Add member">
                 <input class="button" type="button" onclick="close_add_tenant()" style="background-color: tomato" value="Cancel">
-    
-
-                </div>
-                    
             </div>
-            
+
+
+
+            <div class="modal" id="edit_tenant_modal">
+                <h3>Edit Tenant</h3><br>
+                <div class="modal-content">
+                    <div class="name">
+                        <b>Name:</b>
+                        <input class="input" id="edit_tenant_first_name" type="text" placeholder="First Name">
+                        <br><input class="input" id="edit_tenant_last_name" type="text" placeholder="Last Name">
+                    </div>
+
+                    <div class="contact">
+                        <b>Contact:</b>
+                        <input class="input" id="edit_tenant_tenant_email" type="text" placeholder="Email address">
+                        <br><input class="input" id="edit_tenant_phone_number" type="text" placeholder="Phone number">
+                    </div>
+
+                    <div class="property">
+                        <b>Property:</b>
+                        <input class="input" id="edit_tenant_address" type="text" placeholder="Address">
+                        <br><input class="input" id="edit_tenant_appartment" type="text" placeholder="Appartment">
+                    </div>
+
+                    <div class="lease">
+                        <b>Lease term:</b>
+                        <input class="input" id="edit_tenant_lease_start" type="text" placeholder="Start">
+                        <br><input class="input" id="edit_tenant_lease_end" type="text" placeholder="End">
+                    </div>
+
+                    <div class="rent">
+                        <b>Rent:</b>
+                        <input class="input" id="edit_tenant_deposit" type="text" placeholder="Deposit">
+                        <br><input class="input" id="edit_tenant_monthly" type="text" placeholder="Monthly">
+                    </div>
+
+
+                    <div class="utilities">
+                        <b>Utilities:</b>
+                        <label><input type="checkbox" id="edit_tenant_water"> Water</label>
+                        <label><input type="checkbox" id="edit_tenant_electricity"> Electricity</label>
+                        <label><input type="checkbox" id="edit_tenant_hydro"> Hydro</label>
+                        <label><input type="checkbox" id="edit_tenant_gas"> Gas</label>
+                        <label><input type="checkbox" id="edit_tenant_heat"> Heat</label>
+                    </div>
+                    
+
+
+                    <div class="contract">
+                        <b>Contract:</b>
+                        <input class="input" id="edit_tenant_contract" type="text" placeholder="URL">
+                    </div>
+
+
+                    <div class="notes">
+                        <b>Notes:</b>
+                        <textarea class="input" id="edit_tenant_notes" placeholder="Additional Notes"></textarea>
+                    </div>
+                </div>
+
+                <input class="button" type="button" onclick="edit_tenant();" value="Submit Changes">
+                <input class="button" type="button" onclick="close_edit_tenant()" style="background-color: tomato" value="Cancel">
+            </div>
+
+
         </div>
+
+
 
         <div class="content-section">
             <h1>Getting a New Tenant</h1>
             <ol class="task-list">
                 <li>
-                    <strong>Prepare the Unit:</strong> Inspect, clean, paint, and repair any damage as needed (see 
+                    <strong>Prepare the appartment:</strong> Inspect, clean, paint, and repair any damage as needed (see 
                     <a href="/view/adsandfer-management/maintenance">maintenance contractors</a>).
                 </li>
                 <li>
-                    <strong>Set Rent Price:</strong> Research similar units to determine a fair rental price.
+                    <strong>Set Rent Price:</strong> Research similar appartments to determine a fair rental price.
                 </li>
                 <li>
-                    <strong>Create a Listing:</strong> Include unit details, photos, and a link to the 
+                    <strong>Create a Listing:</strong> Include appartment details, photos, and a link to the 
                     <a href="https://forms.gle/BKnwgA3SHBtwU6Kh6" target="_blank">Request Showing Form</a>.
                 </li>
                 <li>

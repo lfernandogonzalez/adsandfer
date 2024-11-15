@@ -1,0 +1,136 @@
+/* Basic styling for the modal and overlay */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Hidden by default */
+.modal-overlay, .modal {
+    display: none;
+}
+
+/* Overlay styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+/* Modal box styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Grid layout for larger screens */
+@media (min-width: 768px) {
+    .modal-content {
+        display: grid;
+        grid-template-areas:
+            "name contact"
+            "property lease"
+            "rent utilities"
+            "contract notes";
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    .modal-content b {
+        text-align: left; 
+        display: block;   
+    }
+
+    .name {
+        grid-area: name;
+    }
+
+    .contact {
+        grid-area: contact;
+    }
+
+    .property {
+        grid-area: property;
+    }
+
+    .lease {
+        grid-area: lease;
+    }
+
+    .rent {
+        grid-area: rent;
+    }
+    .utilities {
+        grid-area: utilities;
+        display: flex;
+        flex-direction: column;  
+        align-items: flex-start;
+        
+    }
+
+    .utilities b {
+
+        margin-bottom: 10px; /* Optional: Adds space below the title */
+    }
+     
+    .utilities label {
+        display: flex; /* Align checkbox and label text horizontally */
+        align-items: center; /* Vertically center the checkbox and text */
+    }
+    
+    .utilities input[type="checkbox"] {
+        margin-right: 5px; /* Adds space between checkbox and text */
+    }
+    
+    
+
+    .contract {
+        grid-area: contract;
+    }
+
+    .notes {
+        grid-area: notes;
+    }
+}
+
+
+/* Button styling */
+.button {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.input,
+textarea.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Textarea specific styles */
+textarea.input {
+    resize: vertical;
+    height: 80px;
+}
