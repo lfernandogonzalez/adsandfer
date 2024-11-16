@@ -1,0 +1,143 @@
+/* Basic styling for the modal and overlay */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Hidden by default */
+.modal-overlay, .modal {
+    display: none;
+}
+
+/* Overlay styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+/* Modal box styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Grid layout for larger screens */
+@media (min-width: 768px) {
+    .modal-content {
+        display: grid;
+        grid-template-areas:
+            "tenant property"
+            "request request";
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    .modal-content b, p{
+        text-align: left; 
+        display: block;   
+    }
+
+    
+
+    .tenant {
+        grid-area: tenant;
+    }
+
+    .property {
+        grid-area: property;
+    }
+
+    .request {
+        grid-area: request;
+    }
+
+}
+
+/* Section-specific styles */
+.modal-content div {
+    margin-bottom: 20px; /* Adds spacing between sections */
+}
+
+/* Input and textarea styling */
+.input,
+textarea.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Textarea specific styles */
+textarea.input {
+    resize: vertical;
+    height: 100px;
+}
+
+/* File input styling */
+input[type="file"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Dropdown styling */
+select.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+.button {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+/* Align section titles */
+.modal-content b {
+    margin-bottom: 5px; /* Adds space between section title and input fields */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 767px) {
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-content div {
+        margin-bottom: 15px; /* Smaller spacing for compact view */
+    }
+}
