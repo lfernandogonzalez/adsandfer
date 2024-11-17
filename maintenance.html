@@ -75,70 +75,8 @@
                 </table>
             </div>
 
-            <p><a href="javascript:void(0);" class="open-modal-link" onclick="open_add_mrequest()">+ Create new request</a></p>
             
             <div class="modal-overlay" id="modal_overlay"></div>
-            <div class="mrequest_modal" id="add_mrequest_modal">
-                <h3>Create Maintenance Request</h3>
-                <br>
-                <div class="mrequest_modal-content">
-            
-            
-                    <!-- Tenant Section -->
-                    <div class="tenant">
-                        <b>Tenant:</b>
-                        <input class="input" id="add_mrequest_tenant_name" type="text" placeholder="Name">
-                        <br>
-                        <input class="input" id="add_mrequest_phone" type="text" placeholder="Phone Number">
-                        <br>
-                        <input class="input" id="add_mrequest_email" type="text" placeholder="Email Address">
-                    </div>
-            
-                    <!-- Property Section -->
-                    <div class="property">
-                        <b>Property:</b>
-                        <select class="input" id="add_mrequest_address">
-                            <option value="" disabled selected>Select Address</option>
-                            <option value="100 Brockville, Smith Falls">100 Brockville, Smith Falls</option>
-                            <!-- Add more properties if needed -->
-                        </select>
-                        <br>
-                        <select class="input" id="add_mrequest_appartment">
-                            <option value="" disabled selected>Unit Number</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-
-                    </div>
-
-
-                    <!-- Request Section -->
-                    <div class="request">
-                        <b>Request:</b>
-                        <p>For a quick resolution, describe the issue, when it started, possible causes, steps you’ve tried, and the best times for us to access the property.</p>
-                        <textarea class="input" id="add_mrequest_details" placeholder="Details"></textarea>
-                        <br>
-                        <select class="input" id="add_mrequest_urgency">
-                            <option value="" disabled selected>Urgency Level</option>
-                            <option value="emergency">Emergency</option>
-                            <option value="urgent">Urgent</option>
-                            <option value="routine">Routine</option>
-                        </select>
-                        <br>
-                        
-
-                    </div>
-            
-                </div>
-            
-                <!-- Buttons -->
-                <input class="button" type="button" onclick="add_mrequest();" value="Submit Request">
-                <input class="button" type="button" onclick="close_add_mrequest()" style="background-color: tomato" value="Cancel">
-            </div>
-            
-
-
 
             <div class="mrequest_modal" id="edit_mrequest_modal">
                 <h3>Edit Maintenance Request</h3><br>
