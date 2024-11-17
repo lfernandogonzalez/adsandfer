@@ -12,11 +12,14 @@
     <script src="js/hamburger_menu.js"></script>
     <script src="js/gallery.js"></script>
     <link rel="stylesheet" href="css/gallery.css">
-    <link rel="stylesheet" href="css/modal.css">
     <script src="js/amazon-cognito-auth.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
+    <link rel="stylesheet" href="css/auth_modal.css">
+    <script src="js/auth_modal.js"></script>
+    
+    
 </head>
 
 <body>
@@ -28,7 +31,7 @@
         <nav class="nav-menu" id="navMenu">
             <a href="index.html">Home</a>
             <a href="tenant_handbook.html">Tenant Handbook</a>
-            <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">Maintenance Request</a>
+            <a href="maintenance_request.html">Maintenance Request</a>
             <a href="pay_rent.html">Pay Rent</a>
         </nav>
         <div class="hamburger-menu" onclick="toggleMenu()">
@@ -96,6 +99,9 @@
         </div>
 
         
+        
+
+        
         <div class="content-section">
             <h2>Tenant Resources</h2>
             <div class="column-container">
@@ -106,7 +112,7 @@
                     </a>
                 </div>
                 <div class="column">
-                    <a href="https://forms.gle/T4hLe2X79aFn6Ayd9">
+                    <a href="maintenance_request.html">
                         <img src="img/maintenance_request.png" alt="Maintenance Request">
                         <h3>Maintenance Request</h3>
                     </a>
@@ -124,8 +130,7 @@
 
 
         <!-- Management Login Modal -->
-        <div class="modal-overlay" id="modalOverlay"></div>
-        <div class="modal" id="modal">
+        <div class="auth_modal" id="auth_modal">
         
             <form>
                 <h1>Management Sign in</h1>
@@ -136,7 +141,7 @@
                 </form>
         
         </div>
-        <script src="js/modal.js"></script>
+        
 
         <footer class="footer">
             <div class="content-section">

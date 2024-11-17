@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adsandfer Properties</title>
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/mrequest_modal.css">
     <link rel="stylesheet" href="css/management.css">
+    <link rel="stylesheet" href="css/mrequest_modal.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -78,10 +78,10 @@
             <p><a href="javascript:void(0);" class="open-modal-link" onclick="open_add_mrequest()">+ Create new request</a></p>
             
             <div class="modal-overlay" id="modal_overlay"></div>
-            <div class="modal" id="add_mrequest_modal">
+            <div class="mrequest_modal" id="add_mrequest_modal">
                 <h3>Create Maintenance Request</h3>
                 <br>
-                <div class="modal-content">
+                <div class="mrequest_modal-content">
             
             
                     <!-- Tenant Section -->
@@ -140,9 +140,9 @@
 
 
 
-            <div class="modal" id="edit_mrequest_modal">
+            <div class="mrequest_modal" id="edit_mrequest_modal">
                 <h3>Edit Maintenance Request</h3><br>
-                <div class="modal-content">
+                <div class="mrequest_modal-content">
                     <input type="hidden" id="edit_mrequest_id">
                     <!-- Tenant Section -->
                     <div class="tenant">
