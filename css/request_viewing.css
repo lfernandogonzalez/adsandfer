@@ -1,0 +1,86 @@
+
+/* Grid layout for larger screens */
+@media (min-width: 768px) {
+    .request-viewing-form {
+        display: grid;
+        grid-template-areas:
+            "full_name move_in_date"
+            "phone_number email"
+            "current_address length_at_address"
+            "reason_for_leaving reason_for_leaving"
+            "employment_status approximate_income"
+            "occupants occupants"
+            "additional_info additional_info"
+            "submit submit";
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    .available_rentals {
+        grid-area: available_rentals;
+    }
+
+    .full_name {
+        grid-area: full_name;
+    }
+
+    .move_in_date {
+        grid-area: move_in_date;
+    }
+
+    .phone_number {
+        grid-area: phone_number;
+    }
+
+    .email {
+        grid-area: email;
+    }
+
+    .current_address {
+        grid-area: current_address;
+    }
+    
+
+    .length_at_address {
+        grid-area: length_at_address;
+    }
+
+    .reason_for_leaving {
+        grid-area: reason_for_leaving;
+    }
+
+    .employment_status {
+        grid-area: employment_status;
+    }
+
+    .approximate_income {
+        grid-area: approximate_income;
+    }
+
+    .credit_score {
+        grid-area: credit_score;
+    }
+
+    .occupants {
+        grid-area: occupants;
+    }
+
+    .pets {
+        grid-area: pets;
+    }
+
+    .occupants {
+        grid-area: occupants;
+    }
+
+    .additional_info {
+        grid-area: additional_info;
+    }
+
+    .submit {
+        grid-area: submit;
+    }
+
+}
+
+

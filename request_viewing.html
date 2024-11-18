@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a viewing</title>
+    <link rel="stylesheet" href="css/common.css"> 
+    <link rel="stylesheet" href="css/mrequest_modal.css">
+    <link rel="stylesheet" href="css/request_viewing.css">
+    <script src="js/gallery.js"></script>
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans:wght@600&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="js/add_viewing.js"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo_transparent.png" alt="Logo">
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="tenant_handbook.html">Tenant Handbook</a>
+            <a href="maintenance_request.html">Maintenance Request</a>
+            <a href="pay_rent.html">Pay Rent</a>
+        </nav>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("navMenu");
+            menu.classList.toggle("active");
+        }
+    </script>
+
+    <div class="modal-overlay" id="modal_overlay"></div>
+
+    <main>
+        <div class="content-section">
+            <h1>100 Brockville, Smith Falls</h1>
+            <div class="content-left">
+                <div class="gallery-container">
+                    <div class="gallery">
+                        <a id="imageLink" href="" target="_blank" class="gallery-link">
+                            <img id="galleryImage" src="" class="gallery-image" alt="Gallery Image">
+                        </a>
+                        <div class="gallery-arrows">
+                            <span class="arrow left-arrow" onclick="changeImage(-1)">&#10094;</span>
+                            <span class="arrow right-arrow" onclick="changeImage(1)">&#10095;</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dots-container" id="dotsContainer"></div>
+
+                    <script>
+                        const images = [
+                            "100_Brockville/Building.jpg",
+                            "100_Brockville/aereal_1.jpg",
+                            "100_Brockville/aereal_2.jpg",
+                            "100_Brockville/aereal_3.jpg",
+                            "100_Brockville/unit_1-blueprint.jpg",
+                            "100_Brockville/unit_1-kitchen.jpg",
+                            "100_Brockville/unit_1-bathroom.jpg",
+                            "100_Brockville/unit_1-laundry.jpg"
+                        ];
+                    </script>
+                </div>
+                
+                <div class="content-right">
+                    <p>
+                        Comfortable <strong>2-bedroom, 1-bathroom</strong> main floor unit in picturesque brick triplex at the heart of Smiths Falls. Newly renovated kitchen and bathroom, complete with modern fixtures and finishes, plus the convenience of in-suite laundry. The living room features hardwood floors and a large window that fills the space with natural light. Main bedroom also offers a private entrance and access to the back deck. 
+                    </p>
+                    <p>
+                        Fantastic location! Walking distance of all the charming shops and restaurants in Downtown Smiths Falls, along with scenic Victoria Park by the canal and Settler’s Ridge Mall. $2000/month + Hydro. Free on-site parking. Available Jan 1st, 2025.
+                    </p>
+                    
+                </div>
+            </div>
+
+                <h2>Request a viewing</h2>
+                <p>Please complete the form below to request a viewing of the unit.</p>
+                <div class="request-viewing-form">
+
+
+                    <!-- Full Name -->
+                    <div class="full_name">
+                        <b>Full Name</b><br>
+                        <input class="input" type="text" id="request_viewing_full_name" required>
+                    </div>
+                
+                    <!-- Desired Move-In Date -->
+                    <div class="move_in_date">
+                        <b>Desired Move-In Date</b><br>
+                        <input class="input" type="date" id="request_viewing_move_in_date">
+                    </div>
+                
+                    <!-- Phone Number -->
+                    <div class="phone_number">
+                        <b>Phone Number</b><br>
+                        <input class="input" type="tel" id="request_viewing_phone_number" required>
+                    </div>
+                
+                    <!-- Email -->
+                    <div class="email">
+                        <b>Email</b><br>
+                        <input class="input" type="email" id="request_viewing_email" required>
+                    </div>
+                
+
+                    <!-- Current Address -->
+                    <div class="current_address">
+                        <b>Current Address</b><br>
+                        <input class="input" type="text" id="request_viewing_current_address" required>
+                    </div>
+                
+
+                    <!-- Length at Address -->
+                    <div class="length_at_address">
+                        <b>How long have you been at this address?</b><br>
+                        <select class="input" id="request_viewing_length_at_address" required>
+                            <option value="" disabled selected>Select one</option>
+                            <option value="less_than_six_months">Less than 6 months</option>
+                            <option value="six_months-one_year">6 Months - 1 Year</option>
+                            <option value="1-2_years">1-2 Years</option>
+                            <option value="2-5_years">2-5 Years</option>
+                            <option value="more_than_5_years">More than 5 years</option>
+                        </select>
+                        
+                    </div>
+
+                    
+                
+                    <!-- Reason for Leaving -->
+                    <div class="reason_for_leaving">
+                        <b>Reason for Leaving</b><br>
+                        <textarea class="input" id="request_viewing_reason_for_leaving" rows="3"></textarea>
+                    </div>
+                
+                    <!-- Employment Status -->
+                    <div class="employment_status">
+                        <b>Employment Status</b><br>
+                        <select class="input" id="request_viewing_employment_status" required>
+                            <option value="" disabled selected>Select one</option>
+                            <option value="employed_full_time">Employed Full-Time</option>
+                            <option value="employed_part_time">Employed Part-Time</option>
+                            <option value="self_employed">Self-Employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="student">Student</option>
+                            <option value="retired">Retired</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                
+                    <!-- Approximate Income -->
+                    <div class="approximate_income">
+                        <b>Approximate Income</b><br>
+                        <select class="input" id="request_viewing_approximate_income" required>
+                            <option value="" disabled selected>Select Income Range</option>
+                            <option value="below_20000">Below $20,000</option>
+                            <option value="20000_40000">$20,000 - $60,000</option>
+                            <option value="60000_80000">$60,000 - $100,000</option>
+                            <option value="above_80000">Above $100,000</option>
+                        </select>
+                    </div>
+                
+                    <!-- Occupants -->
+                    <div class="occupants">
+                        <b>List names, ages, and relationships of all occupants, including pets' breeds.</b><br>
+                        <textarea class="input" id="request_viewing_occupants" rows="3"></textarea>
+                    </div>
+                
+                    
+                    <!-- Additional Information -->
+                    <div class="additional_info">
+                        <b>Any other information you think we should know?</b><br>
+                        <textarea class="input" id="request_viewing_additional_info" rows="3"></textarea>
+                    </div>
+                
+                    <!-- Submit Button -->
+                    <div class="submit">
+                        <div id="form-message" style="color: red; margin-top: 10px;"></div>
+                        <input class="button" type="submit" onclick="add_viewing()" value="Submit Application">
+                    </div>
+                </div>
+                
+            
+            
+        </div>
+
+
+        <!-- ConfirmationModal -->
+        <div class="confirmation_modal" id="confirmation_modal">
+            <h1>Thank you</h1>
+            <p>We have received your request and will get back to you shortly. </p>
+            <input class="button" type="button" onclick="close_confirmation()" style="background-color: tomato" value="Close">
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="content-section">
+            <div>
+                <p>Adsandfer Properties &copy; 2025</p>
+                <p><a href="mailto:adsandferproperties@gmail.com">adsandferproperties@gmail.com</a></p>
+            </div>
+            <div>
+                <p>
+                    <a href="https://www.facebook.com/adsandferproperties" target="_blank"> <img src="img/facebook.png" class="icon"></a>
+                    <span><a href="http://www.facebook.com/adsandferproperties">/adsandfer</a></span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+
+</body>
+</html>

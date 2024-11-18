@@ -52,7 +52,6 @@ ul {
 li {
     margin-bottom: 10px; /* Space between list items */
 }
-
 /* Tables */
 .table-container {
     overflow-x: auto; /* Allow horizontal scrolling */
@@ -68,6 +67,7 @@ li {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
+    vertical-align: top;  /* Top-align content in all cells */
 }
 
 .table th {

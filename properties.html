@@ -18,6 +18,8 @@
     <script src="js/auth.js"></script>
     <script src="js/gallery.js"></script>
     <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/viewing_modal.css">
+    <script src="js/properties.js"></script>
     <script> window.onload = function(){ get_user(); } </script>  
 </head>
 
@@ -88,6 +90,96 @@
                     <p>Units 1 and 3 have been completely renovated since 2021, showcasing beautiful new kitchens and bathrooms. Updated electrical systems and new plumbing throughout the building. Purchased November 2024. </p>
 
                 </div>
+                
+            </div>
+
+            <h2>Viewings</h2>
+            <div class="table-container" id="all_viewings">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Move-in Date</th>
+                            <th>Phone Number</th>
+                            <th>Email Address</th>
+                            <th>Current Address</th>
+                            <th>Length at Address</th>
+                            <th>Reason for Leaving</th>
+                            <th>Employment Status</th>
+                            <th>Approximate Income</th>
+                            <th>Occupants</th>
+                            <th>Additional Info</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="modal-overlay" id="modal_overlay"></div>
+            
+            <div class="viewing_modal" id="edit_viewing_modal">
+                <h3>Edit Tenant Information</h3><br>
+                <div class="viewing_modal-content">
+                    <input type="hidden" id="edit_viewing_id">
+            
+                    <!-- Tenant Section -->
+                    <div class="tenant">
+                        <b>Full Name:</b>
+                        <input class="input" id="edit_full_name" type="text" placeholder="Full Name">
+                        <br>
+                        <b>Phone Number:</b>
+                        <input class="input" id="edit_phone_number" type="text" placeholder="Phone Number">
+                        <br>
+                        <b>Email Address:</b>
+                        <input class="input" id="edit_email" type="email" placeholder="Email Address">
+                    </div>
+            
+                    <!-- Address Section -->
+                    <div class="Address">
+                        <b>Current Address:</b>
+                        <input class="input" id="edit_current_address" type="text" placeholder="Current Address">
+                        <br>
+                        <b>Length at Address:</b>
+                        <input class="input" id="edit_length_at_address" type="text" placeholder="Length at Address">
+                        <br>
+                        <b>Reason for Leaving:</b>
+                        <input class="input" id="edit_reason_for_leaving" type="text" placeholder="Reason for Leaving">
+                        
+                    </div>
+            
+                    <!-- Employment Section -->
+                    <div class="employment">
+                        <b>Employment Status:</b>
+                        <input class="input" id="edit_employment_status" type="text" placeholder="Employment Status">
+                        <br>
+                        <b>Approximate Income:</b>
+                        <input class="input" id="edit_approximate_income" type="text" placeholder="Approximate Income">
+                        <br>
+                        <b>Move-in Date:</b>
+                        <input class="input" id="edit_move_in_date" type="date" placeholder="Move-in Date">
+                        
+                    </div>
+            
+                    <!-- Occupants Section -->
+                    <div class="notes">
+                        <b>Occupants:</b>
+                        <textarea class="input" id="edit_occupants" placeholder="Names, ages, relationships, and pet details"></textarea>
+                        <br>
+                        <b>Additional Info:</b>
+                        <textarea class="input" id="edit_additional_info" placeholder="Additional Information"></textarea>
+                        <br>
+                        <b>Notes:</b>
+                        <textarea class="input" id="edit_notes" placeholder="Notes"></textarea>
+                        <br>
+                        <!-- Buttons -->
+                <input class="button" type="button" onclick="edit_viewing();" value="Submit Changes">
+                <input class="button" type="button" onclick="close_edit_viewing()" style="background-color: tomato" value="Cancel">
+                    </div>
+
+                </div>
+            
                 
             </div>
         </div>
