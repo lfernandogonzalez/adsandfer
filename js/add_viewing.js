@@ -82,6 +82,6 @@ function open_confirmation() {
 
 
 function close_confirmation() {
-    window.location.href = './index.html';
+    window.location.href = '../index.html';
 }
 
