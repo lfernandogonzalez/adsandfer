@@ -26,7 +26,7 @@ function get_tenants() {
 
                 // Create and append cells for each tenant field
                 const fields = [
-                    tenant.address?.S, tenant.appartment?.S,
+                    tenant.address?.S, tenant.apartment?.S,
                     tenant.first_name?.S && tenant.last_name?.S ? `${tenant.first_name.S} ${tenant.last_name.S}` : '',
                     tenant.phone_number?.S, tenant.tenant_email?.S,
                     tenant.lease_start?.S, tenant.lease_end?.S,
@@ -117,7 +117,7 @@ function close_add_tenant() {
     document.body.style.overflow = ""; 
 }
 function add_tenant() {
-    const formData = ['address', 'appartment', 'tenant_email', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'notes', 'contract']
+    const formData = ['address', 'apartment', 'tenant_email', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'notes', 'contract']
         .reduce((acc, field) => ({ ...acc, [field]: document.getElementById(`add_tenant_${field}`).value }), {});
 
     // Directly add the utilities to formData in the same way
@@ -160,7 +160,7 @@ function add_tenant() {
 
 function open_edit_tenant_modal(tenant) {
     console.log(tenant);
-    const fields = ['address', 'appartment', 'tenant_email', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'contract', 'notes'];
+    const fields = ['address', 'apartment', 'tenant_email', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'contract', 'notes'];
 
     fields.forEach(field => {
         const input = document.getElementById(`edit_tenant_${field}`);
@@ -193,7 +193,7 @@ function close_edit_tenant() {
 
 function edit_tenant() {
     // Collecting the form data
-    const formData = ['tenant_email', 'address', 'appartment', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'notes']
+    const formData = ['tenant_email', 'address', 'apartment', 'first_name', 'last_name', 'phone_number', 'lease_start', 'lease_end', 'deposit', 'monthly', 'notes']
         .reduce((acc, field) => ({ ...acc, [field]: document.getElementById(`edit_tenant_${field}`).value }), {});
 
     // Collecting utilities data (checkboxes)

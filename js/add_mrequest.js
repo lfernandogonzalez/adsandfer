@@ -5,14 +5,14 @@ function add_mrequest() {
     const phone = document.getElementById('add_mrequest_phone').value.trim();
     const email = document.getElementById('add_mrequest_email').value.trim();
     const address = document.getElementById('add_mrequest_address').value.trim();
-    const appartment = document.getElementById('add_mrequest_appartment').value.trim();
+    const apartment = document.getElementById('add_mrequest_apartment').value.trim();
     const details = document.getElementById('add_mrequest_details').value.trim();
     const urgency = document.getElementById('add_mrequest_urgency').value.trim();
 
     // Check for empty fields and collect names of missing ones
     const missingFields = [];
     if (!address) missingFields.push("Property address");
-    if (!appartment) missingFields.push("Apartment number");
+    if (!apartment) missingFields.push("Apartment number");
     if (!tenantName) missingFields.push("Tenant Name");
     if (!phone) missingFields.push("Phone number");
     if (!email) missingFields.push("Email address");
@@ -36,7 +36,7 @@ function add_mrequest() {
         phone: phone,
         email: email,
         address: address,
-        appartment: appartment,
+        apartment: apartment,
         details: details,
         urgency: urgency
     };

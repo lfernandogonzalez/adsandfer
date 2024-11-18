@@ -19,7 +19,7 @@ function get_mrequests() {
                     mrequest.phone?.S,            // Phone number
                     mrequest.email?.S,            // Email address
                     mrequest.address?.S,          // Property address
-                    mrequest.appartment?.S,             // appartment number
+                    mrequest.apartment?.S,             // apartment number
                     mrequest.details?.S,          // Description/Details
                     mrequest.urgency?.S          // Urgency
                     
@@ -91,7 +91,7 @@ function open_edit_mrequest_modal(mrequest) {
 
     // Populate property details
     document.getElementById("edit_mrequest_address").value = mrequest.address?.S || "";
-    document.getElementById("edit_mrequest_appartment").value = mrequest.appartment?.S || "";
+    document.getElementById("edit_mrequest_apartment").value = mrequest.apartment?.S || "";
 
     // Populate request details
     document.getElementById("edit_mrequest_details").value = mrequest.details?.S || "";
@@ -119,7 +119,7 @@ function edit_mrequest() {
         phone: document.getElementById("edit_mrequest_phone").value,
         email: document.getElementById("edit_mrequest_email").value,
         address: document.getElementById("edit_mrequest_address").value,
-        appartment: document.getElementById("edit_mrequest_appartment").value,
+        apartment: document.getElementById("edit_mrequest_apartment").value,
         details: document.getElementById("edit_mrequest_details").value,
         urgency: document.getElementById("edit_mrequest_urgency").value
     };
