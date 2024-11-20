@@ -20,7 +20,7 @@ function openModal(home) {
         });
       } 
     }  
-    document.getElementById("modalOverlay").style.display = "block";
+    document.getElementById("modal_overlay").style.display = "block";
     document.getElementById("auth_modal").style.display = "block";
   }
   
