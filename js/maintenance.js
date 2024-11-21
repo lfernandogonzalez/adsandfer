@@ -1,79 +1,78 @@
-document.addEventListener('DOMContentLoaded', function() {
-   get_mrequests();
-});
-
-function get_mrequests() {
+document.addEventListener('DOMContentLoaded', function () {
+    get_mrequests();
+  });
+  
+  function get_mrequests() {
     const api_url = 'https://bvzzykj0n4.execute-api.us-east-1.amazonaws.com/prod/get_requests';
     const tbody = document.getElementById('all_mrequests').querySelector('tbody');
-
+    const loadingBar = document.getElementById('loading-bar');
+  
+    // Show loading bar
+    loadingBar.style.display = 'flex';
+  
     fetch(api_url)
-        .then(response => response.json())
-        .then(mrequests => {
-            const fragment = document.createDocumentFragment();
-            mrequests.forEach(mrequest => {
-                const row = document.createElement('tr');
-
-                // Extract fields from mrequest data
-                const fields = [
-                    mrequest.tenant_name?.S || '',       // Tenant name (single field now)
-                    mrequest.phone?.S,            // Phone number
-                    mrequest.email?.S,            // Email address
-                    mrequest.address?.S,          // Property address
-                    mrequest.apartment?.S,             // apartment number
-                    mrequest.details?.S,          // Description/Details
-                    mrequest.urgency?.S          // Urgency
-                    
-                ];
-
-                // Create table cells for each field
-                fields.forEach(field => {
-                    const cell = document.createElement('td');
-                    cell.textContent = field || ''; // Use empty string for undefined fields
-                    row.appendChild(cell);
-                });
-
-
-                // Append notes cell (if any)
-                const notesCell = document.createElement('td');
-                notesCell.textContent = mrequest.notes?.S || '';  // Show notes if available
-                row.appendChild(notesCell);
-
-                // Append actions (Edit and Delete buttons)
-                const actionCell = document.createElement('td');
-
-                // Edit button (as an image)
-                const editButton = document.createElement('img');
-                editButton.src = 'img/edit_icon.png';  // Replace with your actual edit icon path
-                editButton.alt = 'Edit';
-                editButton.style.width = '24px';  // Adjust size if necessary
-                editButton.style.marginRight = '10px';  // Add spacing between buttons
-                editButton.style.cursor = 'pointer';  // Pointer cursor to indicate clickable button
-                editButton.onclick = () => open_edit_mrequest_modal(mrequest);  // Trigger the edit modal (implement this function)
-                actionCell.appendChild(editButton);
-
-                // Delete button (as an image)
-                const deleteButton = document.createElement('img');
-                deleteButton.src = 'img/delete_icon.png';  // Replace with your actual delete icon path
-                deleteButton.alt = 'Delete';
-                deleteButton.style.width = '24px';  // Adjust size if necessary
-                deleteButton.style.cursor = 'pointer';  // Pointer cursor to indicate clickable button
-                deleteButton.onclick = () => delete_mrequest(mrequest.request_id);  // Trigger the delete function
-                actionCell.appendChild(deleteButton);
-
-                row.appendChild(actionCell);  // Add the action buttons cell
-
-                fragment.appendChild(row);  // Append row to the document fragment
-            });
-
-            // Clear and append new rows in one operation
-            tbody.innerHTML = '';
-            tbody.appendChild(fragment);
-
-            // Log success message
-            console.log("Maintenance requests loaded successfully");
-        })
-        .catch(error => console.error('Error fetching maintenance requests:', error));
-}
+      .then(response => response.json())
+      .then(mrequests => {
+        const fragment = document.createDocumentFragment();
+  
+        mrequests.forEach(mrequest => {
+          const row = document.createElement('tr');
+  
+          const fields = [
+            mrequest.tenant_name?.S || '', // Tenant name
+            mrequest.phone?.S,            // Phone number
+            mrequest.email?.S,            // Email address
+            mrequest.address?.S,          // Property address
+            mrequest.apartment?.S,        // Apartment number
+            mrequest.details?.S,          // Details
+            mrequest.urgency?.S           // Urgency
+          ];
+  
+          fields.forEach(field => {
+            const cell = document.createElement('td');
+            cell.textContent = field || '';
+            row.appendChild(cell);
+          });
+  
+          const notesCell = document.createElement('td');
+          notesCell.textContent = mrequest.notes?.S || '';
+          row.appendChild(notesCell);
+  
+          const actionCell = document.createElement('td');
+          const editButton = document.createElement('img');
+          editButton.src = 'img/edit_icon.png';
+          editButton.alt = 'Edit';
+          editButton.style.width = '24px';
+          editButton.style.marginRight = '10px';
+          editButton.style.cursor = 'pointer';
+          editButton.onclick = () => open_edit_mrequest_modal(mrequest);
+          actionCell.appendChild(editButton);
+  
+          const deleteButton = document.createElement('img');
+          deleteButton.src = 'img/delete_icon.png';
+          deleteButton.alt = 'Delete';
+          deleteButton.style.width = '24px';
+          deleteButton.style.cursor = 'pointer';
+          deleteButton.onclick = () => delete_mrequest(mrequest.request_id);
+          actionCell.appendChild(deleteButton);
+  
+          row.appendChild(actionCell);
+  
+          fragment.appendChild(row);
+        });
+  
+        tbody.innerHTML = '';
+        tbody.appendChild(fragment);
+  
+        console.log("Maintenance requests loaded successfully");
+      })
+      .catch(error => console.error('Error fetching maintenance requests:', error))
+      .finally(() => {
+        // Hide loading bar
+        loadingBar.style.display = 'none';
+      });
+  }
+  
 
 
 

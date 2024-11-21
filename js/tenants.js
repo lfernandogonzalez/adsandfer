@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function get_tenants() {
     const api_url = 'https://91g2v0hbu6.execute-api.us-east-1.amazonaws.com/prod/get_tenants';
     const tbody = document.getElementById('all_tenants').querySelector('tbody');
+    const loadingBar = document.getElementById('loading-bar');
+    loadingBar.style.display = 'flex';
 
     fetch(api_url)
         .then(response => response.json())
@@ -97,7 +99,11 @@ function get_tenants() {
             // Log success message
             console.log("Tenants loaded successfully");
         })
-        .catch(error => console.error('Error fetching tenants:', error));
+        .catch(error => console.error('Error fetching tenants:', error))
+        .finally(() => {
+            // Hide the loading bar
+            loadingBar.style.display = 'none';
+        });
 }
 
 

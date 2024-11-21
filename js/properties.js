@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function get_viewings() {
     const api_url = 'https://vwq97non9k.execute-api.us-east-1.amazonaws.com/prod/get_viewings';
     const tbody = document.getElementById('all_viewings').querySelector('tbody');
+    const loadingBar = document.getElementById('loading-bar');
+    loadingBar.style.display = 'flex';
 
     fetch(api_url)
         .then(response => response.json())
@@ -70,7 +72,11 @@ function get_viewings() {
             // Log success message
             console.log("Viewings loaded successfully");
         })
-        .catch(error => console.error('Error fetching viewings:', error));
+        .catch(error => console.error('Error fetching viewings:', error))
+        .finally(() => {
+            // Hide the loading bar
+            loadingBar.style.display = 'none';
+        });
 }
 
 function open_edit_viewing_modal(viewing) {
