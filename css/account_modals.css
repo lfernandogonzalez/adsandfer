@@ -1,0 +1,33 @@
+/* Common Modal Styles */
+.account_modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    border-radius: 8px;
+}
+
+/* Spacing for modal sections */
+.account_modal-content div {
+    margin-bottom: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    .account_modal-content {
+        flex-direction: column;
+    }
+
+    .account_modal-content div {
+        margin-bottom: 15px;
+    }
+}
