@@ -35,18 +35,54 @@ async function get_accounts() {
     document.getElementById('loading-bar').style.display = 'flex';
     try {
         const { accounts = [] } = await fetchApi('get', 'accounts');
+        const { transactions = [] } = await fetchApi('get', 'transactions');
+        
+        // Calculate balance for each account
+        const accountBalances = calculate_balances(accounts, transactions);
+
         const sortedAccounts = accounts.sort((a, b) => a.account_name.localeCompare(b.account_name));
-        tbody.innerHTML = sortedAccounts.map(account => `
-            <tr>
-                ${['account_name', 'account_type'].map(field => `<td>${account[field] || ''}</td>`).join('')}
-                <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
-            </tr>`).join('');
+        tbody.innerHTML = sortedAccounts.map(account => {
+            const balance = accountBalances[account.account_name] || 0;
+            return `
+                <tr>
+                    ${['account_name', 'account_type'].map(field => `<td>${account[field] || ''}</td>`).join('')}
+                    <td>${balance.toFixed(2)}</td> <!-- Display balance -->
+                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
+                </tr>`;
+        }).join('');
+
         ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to'].forEach(id => createOptions(document.getElementById(id), sortedAccounts));
     } catch (error) {
         console.error('Error fetching accounts:', error);
     } finally {
         document.getElementById('loading-bar').style.display = 'none';
     }
+}
+
+// Calculate the balance for each account by iterating through the transactions
+function calculate_balances(accounts, transactions) {
+    const balances = {};
+
+    // Initialize balances with 0
+    accounts.forEach(account => {
+        balances[account.account_name] = 0;
+    });
+
+    // Iterate through transactions and adjust balances
+    transactions.forEach(transaction => {
+        const { transaction_from, transaction_to, transaction_amount } = transaction;
+        const amount = parseFloat(transaction_amount) || 0;
+
+        // Subtract from the 'from' account and add to the 'to' account
+        if (transaction_from && balances[transaction_from] !== undefined) {
+            balances[transaction_from] -= amount;
+        }
+        if (transaction_to && balances[transaction_to] !== undefined) {
+            balances[transaction_to] += amount;
+        }
+    });
+
+    return balances;
 }
 
 function open_edit_account(account) {
@@ -89,6 +125,12 @@ function validate_form(action, database, fieldIds, hide) {
 
 async function submit_form(action, database, data, hide) {
     try {
+        const fileInput = document.getElementById(`${action}_transaction_attachment`);
+        if (fileInput && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const attachmentUrl = await upload_attachment(file);
+            data.attachment_url = attachmentUrl;
+        }
         const { message } = await fetchApi(action, database, 'POST', data);
         if (message.includes('successfully')) {
             console.log(message);
@@ -102,6 +144,16 @@ async function submit_form(action, database, data, hide) {
     }
 }
 
+async function upload_attachment(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(`${transactions_url}/upload_attachment`);
+    const response = await fetch(`${transactions_url}/upload_attachment`, { method: 'POST', body: formData });
+    if (!response.ok) throw new Error('Failed to upload attachment');
+    const { attachment_url } = await response.json();
+    return attachment_url; 
+}
+
 function add_account() { validate_form('add', 'account', ['account_name', 'account_type'], true); }
 function edit_account() { validate_form('edit', 'account', ['account_id', 'account_name', 'account_type'], true); }
 function delete_account() {
@@ -111,7 +163,7 @@ function delete_account() {
 }
 function clear_add_account_form() { ['account_name', 'account_type'].forEach(id => document.getElementById(`add_${id}`).value = ''); document.getElementById('form-message').innerText = ''; }
 
-function add_transaction() { validate_form('add', 'transaction', ['transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax'], true); }
+function add_transaction() { validate_form('add', 'transaction', ['transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax']); }
 function edit_transaction() { validate_form('edit', 'transaction', ['transaction_id', 'transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax'], true); }
 function delete_transaction() {
     if (confirm('Are you sure you want to delete this transaction?')) {
