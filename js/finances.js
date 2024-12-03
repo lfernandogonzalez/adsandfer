@@ -1,18 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-    get_accounts();
-    get_transactions();
+let cachedTransactions = []; // Global cache for transactions
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await get_transactions(); // Fetch and display transactions, caching them globally
+        await get_accounts(); // Load accounts using cached transactions
+    } catch (error) {
+        console.error('Error during initialization:', error);
+    }
 });
 
 const actions_url = 'https://gx6m7ok39h.execute-api.us-east-1.amazonaws.com/prod';
 const transactions_url = 'https://xheeg8h25d.execute-api.us-east-1.amazonaws.com/prod';
-
-async function fetchApi(action, database, method = 'GET', body = null) {
-    const options = { method, headers: { 'Content-Type': 'application/json' }, ...(body && { body: JSON.stringify(body) }) };
-    const baseUrl = ['account', 'accounts'].includes(database) ? actions_url : ['transaction', 'transactions'].includes(database) ? transactions_url : null;
-    const response = await fetch(`${baseUrl}/${action}_${database}`, options);
-    if (!response.ok) throw new Error(await response.text());
-    return response.json();
-}
 
 function toggle_modal(modalId, show = true) {
     document.getElementById(modalId).style.display = show ? 'block' : 'none';
@@ -30,77 +28,69 @@ function createOptions(dropdown, data) {
     });
 }
 
-async function get_accounts() {
-    const tbody = document.querySelector('#all_accounts tbody');
-    document.getElementById('loading-bar').style.display = 'flex';
-    try {
-        const { accounts = [] } = await fetchApi('get', 'accounts');
-        const { transactions = [] } = await fetchApi('get', 'transactions');
-        
-        // Calculate balance for each account
-        const accountBalances = calculate_balances(accounts, transactions);
 
-        const sortedAccounts = accounts.sort((a, b) => a.account_name.localeCompare(b.account_name));
-        tbody.innerHTML = sortedAccounts.map(account => {
-            const balance = accountBalances[account.account_name] || 0;
-            return `
-                <tr>
-                    ${['account_name', 'account_type'].map(field => `<td>${account[field] || ''}</td>`).join('')}
-                    <td>${balance.toFixed(2)}</td> <!-- Display balance -->
-                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
-                </tr>`;
-        }).join('');
-
-        ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to'].forEach(id => createOptions(document.getElementById(id), sortedAccounts));
-    } catch (error) {
-        console.error('Error fetching accounts:', error);
-    } finally {
-        document.getElementById('loading-bar').style.display = 'none';
+function submit_form(url, data, formFields, messageId) {
+    const missingFields = Object.entries(data).filter(([key, value]) => !value).map(([key]) => key);
+    if (missingFields.length) {
+        document.getElementById(messageId).innerText = `Missing fields: ${missingFields.join(', ')}`;
+        return;
     }
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Request failed.');
+            return response.json();
+        })
+        .then(({ message }) => {
+            if (message.includes('successfully')) {
+                get_transactions();
+                get_accounts();
+                clear_form(formFields, messageId); 
+            } else {
+                document.getElementById(messageId).innerText = `Error: ${message}`;
+            }
+        })
+        .catch(error => {
+            console.error('Request failed:', error);
+            document.getElementById(messageId).innerText = 'Request failed. Please try again.';
+        });
 }
 
-// Calculate the balance for each account by iterating through the transactions
-function calculate_balances(accounts, transactions) {
-    const balances = {};
 
-    // Initialize balances with 0
-    accounts.forEach(account => {
-        balances[account.account_name] = 0;
+function clear_form(fields, messageId) {
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = ''; 
+        }
     });
 
-    // Iterate through transactions and adjust balances
-    transactions.forEach(transaction => {
-        const { transaction_from, transaction_to, transaction_amount } = transaction;
-        const amount = parseFloat(transaction_amount) || 0;
+    // Clear the message
+    if (messageId) {
+        document.getElementById(messageId).innerText = '';
+    }
 
-        // Subtract from the 'from' account and add to the 'to' account
-        if (transaction_from && balances[transaction_from] !== undefined) {
-            balances[transaction_from] -= amount;
-        }
-        if (transaction_to && balances[transaction_to] !== undefined) {
-            balances[transaction_to] += amount;
-        }
-    });
-
-    return balances;
 }
 
-function open_edit_account(account) {
-    Object.keys(account).forEach(field => document.getElementById(`edit_${field}`).value = account[field] || '');
-    toggle_modal('edit_account_modal');
-}
 
 async function get_transactions() {
     const tbody = document.querySelector('#all_transactions tbody');
     document.getElementById('loading-bar').style.display = 'flex';
     try {
-        const { transactions = [] } = await fetchApi('get', 'transactions');
+        const response = await fetch(`${transactions_url}/get_transactions`);
+        if (!response.ok) throw new Error('Failed to fetch transactions.');
+        const { transactions = [] } = await response.json();
+        cachedTransactions = transactions;
         const sortedTransactions = transactions.sort((a, b) => a.transaction_date.localeCompare(b.transaction_date));
+
         tbody.innerHTML = sortedTransactions.map(transaction => `
             <tr>
                 ${['transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax']
                     .map(field => `<td>${transaction[field] || ''}</td>`).join('')}
-                <td></td>
                 <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
             </tr>`).join('');
     } catch (error) {
@@ -110,64 +100,154 @@ async function get_transactions() {
     }
 }
 
+
+
+function add_transaction() {
+    const fields = ['transaction_date', 'transaction_from', 'transaction_to', 'transaction_amount', 'transaction_tax', 'transaction_memo'];
+    const data = {};
+    fields.forEach(field => {
+        data[field] = document.getElementById(`add_${field}`).value.trim();
+    });
+
+    submit_form(`${transactions_url}/add_transaction`, data, ['add_transaction_date', 'add_transaction_from', 'add_transaction_to', 'add_transaction_memo', 'add_transaction_amount', 'add_transaction_tax'], 'add_transaction_form_message');
+}
+
+
+
 function open_edit_transaction(transaction) {
-    Object.keys(transaction).forEach(field => document.getElementById(`edit_${field}`).value = transaction[field] || '');
-    toggle_modal('edit_transaction_modal');
+    const fields = ['transaction_id', 'transaction_date', 'transaction_from', 'transaction_to', 'transaction_amount', 'transaction_tax', 'transaction_memo'];
+    fields.forEach(field => {
+        document.getElementById(`edit_${field}`).value = transaction[field];
+    });
+    toggle_modal('edit_transaction_modal', true);
 }
 
-function validate_form(action, database, fieldIds, hide) {
-    const data = Object.fromEntries(fieldIds.map(id => [id, document.getElementById(`${action}_${id}`).value.trim()]));
-    const missingFields = Object.entries(data).filter(([_, v]) => !v).map(([k]) => k.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase()));
-    if (missingFields.length) return document.getElementById(`${action}_${database}_form_message`).innerText = `Missing fields: ${missingFields.join(', ')}`;
-    document.getElementById(`${action}_${database}_form_message`).innerText = '';
-    submit_form(action, database, data, hide);
+
+function edit_transaction() {
+    const fields = ['transaction_id', 'transaction_date', 'transaction_from', 'transaction_to', 'transaction_amount', 'transaction_tax', 'transaction_memo'];
+    const data = {};
+    fields.forEach(field => {
+        data[field] = document.getElementById(`edit_${field}`).value.trim();
+    });
+
+    submit_form(`${transactions_url}/edit_transaction`, data, ['edit_transaction_date', 'edit_transaction_from', 'edit_transaction_to', 'edit_transaction_amount'], 'edit_transaction_form_message');
+    toggle_modal('edit_transaction_modal', false);
 }
 
-async function submit_form(action, database, data, hide) {
-    try {
-        const fileInput = document.getElementById(`${action}_transaction_attachment`);
-        if (fileInput && fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            const attachmentUrl = await upload_attachment(file);
-            data.attachment_url = attachmentUrl;
-        }
-        const { message } = await fetchApi(action, database, 'POST', data);
-        if (message.includes('successfully')) {
-            console.log(message);
-            database === 'account' ? get_accounts() : get_transactions();
-            if (hide) { if (action === "delete") action = "edit"; toggle_modal(`${action}_${database}_modal`, false); }
-        } else {
-            console.error(`${action} failed:`, message);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-async function upload_attachment(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log(`${transactions_url}/upload_attachment`);
-    const response = await fetch(`${transactions_url}/upload_attachment`, { method: 'POST', body: formData });
-    if (!response.ok) throw new Error('Failed to upload attachment');
-    const { attachment_url } = await response.json();
-    return attachment_url; 
-}
-
-function add_account() { validate_form('add', 'account', ['account_name', 'account_type'], true); }
-function edit_account() { validate_form('edit', 'account', ['account_id', 'account_name', 'account_type'], true); }
-function delete_account() {
-    if (confirm('Are you sure you want to delete this Account?')) {
-        submit_form('delete', 'account', { account_id: document.getElementById('edit_account_id').value }, true);
-    }
-}
-function clear_add_account_form() { ['account_name', 'account_type'].forEach(id => document.getElementById(`add_${id}`).value = ''); document.getElementById('form-message').innerText = ''; }
-
-function add_transaction() { validate_form('add', 'transaction', ['transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax']); }
-function edit_transaction() { validate_form('edit', 'transaction', ['transaction_id', 'transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax'], true); }
 function delete_transaction() {
-    if (confirm('Are you sure you want to delete this transaction?')) {
-        submit_form('delete', 'transaction', { transaction_id: document.getElementById('edit_transaction_id').value }, true);
+    const transaction_id = document.getElementById('edit_transaction_id').value.trim();
+    if (!transaction_id || !confirm('Are you sure you want to delete this transaction?')) return;
+
+    fetch(`${transactions_url}/delete_transaction`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transaction_id }),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete transaction.');
+            return response.json();
+        })
+        .then(({ message }) => {
+            if (message.includes('successfully')) {
+                get_transactions();
+                toggle_modal('edit_transaction_modal', false);
+            } else {
+                console.error('Error deleting transaction:', message);
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting transaction:', error);
+        });
+}
+
+
+
+async function get_accounts() {
+    const tbody = document.querySelector('#all_accounts tbody');
+    document.getElementById('loading-bar').style.display = 'flex';
+    try {
+        const accountsResponse = await fetch(`${actions_url}/get_accounts`);
+        if (!accountsResponse.ok) throw new Error('Failed to fetch accounts.');
+        const { accounts = [] } = await accountsResponse.json();
+        const accountBalances = calculate_balances(accounts, cachedTransactions);
+
+        tbody.innerHTML = accounts.sort((a, b) => a.account_name.localeCompare(b.account_name))
+            .map(account => `
+                <tr>
+                    ${['account_name', 'account_type'].map(field => `<td>${account[field] || ''}</td>`).join('')}
+                    <td>${(accountBalances[account.account_name] || 0).toFixed(2)}</td>
+                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
+                </tr>`).join('');
+        ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to']
+            .forEach(id => createOptions(document.getElementById(id), accounts));
+    } catch (error) {
+        console.error('Error fetching accounts:', error);
+    } finally {
+        document.getElementById('loading-bar').style.display = 'none';
     }
 }
-function clear_add_transaction_form() { ['transaction_name', 'transaction_type'].forEach(id => document.getElementById(`add_${id}`).value = ''); document.getElementById('form-message').innerText = ''; }
+
+function calculate_balances(accounts, transactions) {
+    const balances = {};
+    accounts.forEach(account => balances[account.account_name] = 0);
+    transactions.forEach(({ transaction_from, transaction_to, transaction_amount }) => {
+        const amount = parseFloat(transaction_amount) || 0;
+        if (transaction_from) balances[transaction_from] -= amount;
+        if (transaction_to) balances[transaction_to] += amount;
+    });
+    return balances;
+}
+
+function add_account() {
+    const fields = ['account_name', 'account_type'];
+    const data = {};
+    fields.forEach(field => {
+        data[field] = document.getElementById(`add_${field}`).value.trim();
+    });
+    submit_form(`${actions_url}/add_account`, data, ['add_account_name', 'add_account_type'], 'add_account_form_message');
+}
+
+function open_edit_account(account) {
+    const fields = ['account_id', 'account_name', 'account_type'];
+    fields.forEach(field => {
+        document.getElementById(`edit_${field}`).value = account[field];
+    });
+    toggle_modal('edit_account_modal', true);
+}
+
+function edit_account() {
+    const fields = ['account_id', 'account_name', 'account_type'];
+    const data = {};
+    fields.forEach(field => {
+        data[field] = document.getElementById(`edit_${field}`).value.trim();
+    });
+    submit_form(`${actions_url}/edit_account`, data, ['edit_account_name', 'edit_account_type'], 'edit_account_form_message');
+    toggle_modal('edit_account_modal', false);
+}
+
+
+function delete_account() {
+    const account_id = document.getElementById('edit_account_id').value.trim();
+    if (!account_id || !confirm('Are you sure you want to delete this account?')) return;
+
+    fetch(`${actions_url}/delete_account`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ account_id }),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete account.');
+            return response.json();
+        })
+        .then(({ message }) => {
+            if (message.includes('successfully')) {
+                get_accounts();
+                toggle_modal('edit_account_modal', false);
+            } else {
+                console.error('Error deleting account:', message);
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting account:', error);
+        });
+}
