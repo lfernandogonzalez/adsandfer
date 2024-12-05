@@ -70,7 +70,7 @@
                         <tr>
                             <th colspan="7">
                                 <div class="header-controls">
-                                    <select class="input" id="transaction_filter" onchange="filterTransactions()" style="width: 200px;">
+                                    <select class="input" id="transaction_filter" onchange="get_transactions()" style="width: 200px;">
                                         <option value="last_30_days">Last 30 days</option>
                                         <option value="last_6_months">Last 6 months</option>
                                         <option value="last_12_months">Last 12 months</option>
@@ -90,9 +90,9 @@
                             <th>Date</th>
                             <th>From</th>
                             <th>To</th>
-                            <th>Memo</th>
                             <th>Amount</th>
                             <th>Tax</th>
+                            <th>Memo</th>
                             <th>Attachment</th>
                         </tr>
                     </thead>
@@ -191,7 +191,7 @@
                                     <option value="Expense">Expense</option>
                                 </select>
                             </th>
-                            <th><input class="input" placeholder="0.00" disabled></th>
+                            <th><input class="input" value="0" id="add_account_balance" placeholder="0.00" disabled></th>
                             <th><input class="button" type="button" onclick="add_account();" value="Add"></th>
                 </table>
                 <div id="add_account_form_message" style="color: red; margin-top: 10px;"></div>

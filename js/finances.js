@@ -2,7 +2,7 @@ let cachedTransactions = []; // Global cache for transactions
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        await get_transactions(); // Fetch and display transactions, caching them globally
+        // Fetch and display transactions, caching them globally
         await get_accounts(); // Load accounts using cached transactions
     } catch (error) {
         console.error('Error during initialization:', error);
@@ -22,7 +22,8 @@ function createOptions(dropdown, data) {
     dropdown.innerHTML = '<option value="" disabled selected>Select Account</option>';
     data.forEach(item => {
         const option = document.createElement('option');
-        option.value = item.account_name;
+        // Set value to account_id for use in transaction
+        option.value = item.account_id;  // Assuming account_id exists
         option.textContent = item.account_name;
         dropdown.appendChild(option);
     });
@@ -75,30 +76,47 @@ function clear_form(fields, messageId) {
     }
 
 }
-
-
 async function get_transactions() {
     const tbody = document.querySelector('#all_transactions tbody');
+    const filterValue = document.getElementById('transaction_filter').value;  // Get selected filter
     document.getElementById('loading-bar').style.display = 'flex';
     try {
-        const response = await fetch(`${transactions_url}/get_transactions`);
+        const response = await fetch(`${transactions_url}/get_transactions?filter=${filterValue}`);
         if (!response.ok) throw new Error('Failed to fetch transactions.');
         const { transactions = [] } = await response.json();
         cachedTransactions = transactions;
-        const sortedTransactions = transactions.sort((a, b) => a.transaction_date.localeCompare(b.transaction_date));
 
-        tbody.innerHTML = sortedTransactions.map(transaction => `
-            <tr>
-                ${['transaction_date', 'transaction_from', 'transaction_to', 'transaction_memo', 'transaction_amount', 'transaction_tax']
-                    .map(field => `<td>${transaction[field] || ''}</td>`).join('')}
-                <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
-            </tr>`).join('');
+        // Sorting by date first, then by "transaction_from"
+        const sortedTransactions = transactions.sort((a, b) => {
+            const dateComparison = a.transaction_date.localeCompare(b.transaction_date);
+            if (dateComparison !== 0) return dateComparison;
+            return a.transaction_from.localeCompare(b.transaction_from);
+        });
+
+        // Render the transactions with correct order and account names
+        tbody.innerHTML = sortedTransactions.map(transaction => {
+            // Look up the account names for 'transaction_from' and 'transaction_to'
+            const fromAccountName = accountNamesMap[transaction.transaction_from] || transaction.transaction_from;
+            const toAccountName = accountNamesMap[transaction.transaction_to] || transaction.transaction_to;
+
+            return `
+                <tr>
+                    <td>${transaction.transaction_date || ''}</td> <!-- Date -->
+                    <td>${fromAccountName}</td>  <!-- Account 'from' name -->
+                    <td>${toAccountName}</td>    <!-- Account 'to' name -->
+                    <td>${transaction.transaction_amount || ''}</td> <!-- Amount -->
+                    <td>${transaction.transaction_tax || ''}</td>    <!-- Tax -->
+                    <td>${transaction.transaction_memo || ''}</td>   <!-- Memo -->
+                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
+                </tr>`;
+        }).join('');
     } catch (error) {
         console.error('Error fetching transactions:', error);
     } finally {
         document.getElementById('loading-bar').style.display = 'none';
     }
 }
+
 
 
 
@@ -150,6 +168,7 @@ function delete_transaction() {
         .then(({ message }) => {
             if (message.includes('successfully')) {
                 get_transactions();
+                get_accounts();
                 toggle_modal('edit_transaction_modal', false);
             } else {
                 console.error('Error deleting transaction:', message);
@@ -161,6 +180,7 @@ function delete_transaction() {
 }
 
 
+let accountNamesMap = {}; // Global map to store account_id -> account_name
 
 async function get_accounts() {
     const tbody = document.querySelector('#all_accounts tbody');
@@ -169,15 +189,21 @@ async function get_accounts() {
         const accountsResponse = await fetch(`${actions_url}/get_accounts`);
         if (!accountsResponse.ok) throw new Error('Failed to fetch accounts.');
         const { accounts = [] } = await accountsResponse.json();
-        const accountBalances = calculate_balances(accounts, cachedTransactions);
-
+        
+        // Create the account names map
+        accountNamesMap = accounts.reduce((map, account) => {
+            map[account.account_id] = account.account_name;
+            return map;
+        }, {});
+        await get_transactions();
         tbody.innerHTML = accounts.sort((a, b) => a.account_name.localeCompare(b.account_name))
             .map(account => `
                 <tr>
-                    ${['account_name', 'account_type'].map(field => `<td>${account[field] || ''}</td>`).join('')}
-                    <td>${(accountBalances[account.account_name] || 0).toFixed(2)}</td>
+                    ${['account_name', 'account_type', 'account_balance'].map(field => `<td>${account[field] || ''}</td>`).join('')}
                     <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
                 </tr>`).join('');
+        
+        // Populate dropdowns for adding/editing transactions
         ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to']
             .forEach(id => createOptions(document.getElementById(id), accounts));
     } catch (error) {
@@ -187,24 +213,25 @@ async function get_accounts() {
     }
 }
 
-function calculate_balances(accounts, transactions) {
-    const balances = {};
-    accounts.forEach(account => balances[account.account_name] = 0);
+
+function calculate_account_balances(accounts, transactions) {
+    const account_balances = {};
+    accounts.forEach(account => account_balances[account.account_name] = 0);
     transactions.forEach(({ transaction_from, transaction_to, transaction_amount }) => {
         const amount = parseFloat(transaction_amount) || 0;
-        if (transaction_from) balances[transaction_from] -= amount;
-        if (transaction_to) balances[transaction_to] += amount;
+        if (transaction_from) account_balances[transaction_from] -= amount;
+        if (transaction_to) account_balances[transaction_to] += amount;
     });
-    return balances;
+    return account_balances;
 }
 
 function add_account() {
-    const fields = ['account_name', 'account_type'];
+    const fields = ['account_name', 'account_type', 'account_balance'];
     const data = {};
     fields.forEach(field => {
         data[field] = document.getElementById(`add_${field}`).value.trim();
     });
-    submit_form(`${actions_url}/add_account`, data, ['add_account_name', 'add_account_type'], 'add_account_form_message');
+    submit_form(`${actions_url}/add_account`, data, ['add_account_name', 'add_account_type', 'account_balance'], 'add_account_form_message');
 }
 
 function open_edit_account(account) {
