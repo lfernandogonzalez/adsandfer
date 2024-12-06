@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .receipt-detail {
+            margin-bottom: 10px;
+        }
+        .receipt-detail strong {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h2>Transaction Receipt</h2>
+
+    <div class="receipt-detail">
+        <strong>Date:</strong> <span id="transaction_date"></span>
+    </div>
+    <div class="receipt-detail">
+        <strong>From:</strong> <span id="transaction_from"></span>
+    </div>
+    <div class="receipt-detail">
+        <strong>To:</strong> <span id="transaction_to"></span>
+    </div>
+    <div class="receipt-detail">
+        <strong>Amount:</strong> $<span id="transaction_amount"></span>
+    </div>
+    <div class="receipt-detail">
+        <strong>Tax:</strong> $<span id="transaction_tax"></span>
+    </div>
+    <div class="receipt-detail">
+        <strong>Memo:</strong> <span id="transaction_memo"></span>
+    </div>
+
+    <script>
+        // Function to get the transaction_id from the URL
+        function getTransactionIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('transaction_id');
+        }
+
+        // Function to load receipt details for the transaction
+        async function loadReceipt() {
+            const transactionId = getTransactionIdFromURL();  // Get the transaction_id from the URL
+            if (!transactionId) {
+                alert("Transaction ID not found in the URL.");
+                return;
+            }
+
+            // Dynamically get the base URL from the current page's URL
+            const baseUrl = window.location.origin; // Grabs the current domain (e.g., https://yourdomain.com)
+
+            try {
+                const response = await fetch(`https://xheeg8h25d.execute-api.us-east-1.amazonaws.com/prod/get_transaction?transaction_id=${transactionId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch transaction details.');
+                }
+
+                const transaction = await response.json();
+                const { transaction_date, transaction_from, transaction_to, transaction_amount, transaction_tax, transaction_memo } = transaction;
+
+                // Populate receipt details
+                document.getElementById('transaction_date').textContent = transaction_date;
+                document.getElementById('transaction_from').textContent = transaction_from;
+                document.getElementById('transaction_to').textContent = transaction_to;
+                document.getElementById('transaction_amount').textContent = transaction_amount;
+                document.getElementById('transaction_tax').textContent = transaction_tax;
+                document.getElementById('transaction_memo').textContent = transaction_memo;
+
+            } catch (error) {
+                console.error('Error loading transaction receipt:', error);
+                alert('Failed to load receipt details.');
+            }
+        }
+
+        // Call the function to load the receipt on page load
+        window.onload = loadReceipt;
+    </script>
+</body>
+</html>

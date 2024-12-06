@@ -1,0 +1,105 @@
+#receipt_modal {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.receipt-header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    -webkit-print-color-adjust: exact;  /* Force background color to print */
+}
+
+.receipt-logo {
+    max-height: 100px;
+}
+
+.receipt-title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.receipt-detail {
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.receipt-detail p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+.receipt-detail h3 {
+    margin-top:50px;
+}
+
+.receipt-detail strong {
+    font-weight: bold;
+}
+
+.receipt-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Print-specific Styles */
+@media print {
+
+    /* Hide any footer content during printing */
+    footer, .footer, .file, .print-footer {
+        display: none !important;
+    }
+    
+    /* Optionally, you can also hide page numbers or extra elements if needed */
+    @page {
+        margin: 0;
+    }
+    #receipt_modal {
+        background-color: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .receipt-header {
+        background-color: #333 !important;  /* Ensure header background stays */
+        color: white !important;  /* Text remains white */
+        text-align: center !important;  /* Center align content */
+        -webkit-print-color-adjust: exact !important;  /* Ensure background color prints */
+    }
+
+    .receipt-logo {
+        max-height: 100px !important;  /* Adjust logo size for printing */
+        margin-bottom: 10px !important;
+    }
+
+    .receipt-title {
+        font-size: 24px !important;
+        color: white !important;
+        margin: 10px 0 !important;
+    }
+
+    .receipt-detail {
+        font-size: 16px !important;
+        margin: 10px 60px !important;  /* Make sure margins stay for print */
+    }
+
+    .receipt-footer {
+        font-size: 12px !important;
+        margin-top: 20px !important;
+    }
+
+    .button {
+        display: none !important;  /* Hide buttons when printing */
+    }
+}

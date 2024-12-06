@@ -76,6 +76,8 @@ function clear_form(fields, messageId) {
     }
 
 }
+
+
 async function get_transactions() {
     const tbody = document.querySelector('#all_transactions tbody');
     const filterValue = document.getElementById('transaction_filter').value;  // Get selected filter
@@ -96,18 +98,23 @@ async function get_transactions() {
         // Render the transactions with correct order and account names
         tbody.innerHTML = sortedTransactions.map(transaction => {
             // Look up the account names for 'transaction_from' and 'transaction_to'
-            const fromAccountName = accountNamesMap[transaction.transaction_from] || transaction.transaction_from;
-            const toAccountName = accountNamesMap[transaction.transaction_to] || transaction.transaction_to;
+            const fromAccount = accountNamesMap[transaction.transaction_from] || { name: transaction.transaction_from, type: '' };
+            const toAccount = accountNamesMap[transaction.transaction_to] || { name: transaction.transaction_to, type: '' };
+
+            // Check if the transaction is from an Income account
+            const isIncome = fromAccount.type === 'Income';
 
             return `
                 <tr>
                     <td>${transaction.transaction_date || ''}</td> <!-- Date -->
-                    <td>${fromAccountName}</td>  <!-- Account 'from' name -->
-                    <td>${toAccountName}</td>    <!-- Account 'to' name -->
+                    <td>${fromAccount.name}</td>  <!-- Account 'from' name -->
+                    <td>${toAccount.name}</td>    <!-- Account 'to' name -->
                     <td>${transaction.transaction_amount || ''}</td> <!-- Amount -->
                     <td>${transaction.transaction_tax || ''}</td>    <!-- Tax -->
                     <td>${transaction.transaction_memo || ''}</td>   <!-- Memo -->
-                    <td></td>
+                    <td>
+                         ${isIncome ? `<span style="cursor:pointer;font-size:24px;" onclick='generate_receipt(${JSON.stringify(transaction)})'>🧾</span>` : ''}
+                    </td>
                     <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
                 </tr>`;
         }).join('');
@@ -181,7 +188,28 @@ function delete_transaction() {
 }
 
 
-let accountNamesMap = {}; // Global map to store account_id -> account_name
+function generate_receipt(transaction) {
+    const fields = ['transaction_id', 'transaction_date', 'transaction_amount', 'transaction_tax', 'transaction_memo'];
+    fields.forEach(field => {
+        document.getElementById(`receipt_${field}`).textContent = transaction[field];
+    });
+    toggle_modal('receipt_modal', true);
+}
+
+
+
+function print_receipt() {
+    const printContents = document.getElementById('receipt_modal').innerHTML;
+    const originalContents = document.body.innerHTML;
+    
+    document.body.innerHTML = `<div>${printContents}</div>`;
+    window.print();
+    document.body.innerHTML = originalContents;  // Restore the original page content
+}
+
+
+
+let accountNamesMap = {}; // Global map to store account_id -> { account_name, account_type }
 
 async function get_accounts() {
     const tbody = document.querySelector('#all_accounts tbody');
@@ -193,7 +221,10 @@ async function get_accounts() {
         
         // Create the account names map
         accountNamesMap = accounts.reduce((map, account) => {
-            map[account.account_id] = account.account_name;
+            map[account.account_id] = {
+                name: account.account_name,
+                type: account.account_type // Add account_type
+            };
             return map;
         }, {});
         await get_transactions();

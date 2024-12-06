@@ -6,6 +6,7 @@
     <title>Adsandfer Properties</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/account_modals.css">
+    <link rel="stylesheet" href="css/receipt.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -66,7 +67,6 @@
                 <div class="tabs">
                     <button class="tab-button active" onclick="showTab('transactions')">Transactions</button>
                     <button class="tab-button" onclick="showTab('accounts')">Accounts</button>
-                    <button class="tab-button" onclick="showTab('receipts')">Receipts</button>
                 </div>
                 <div class="tab-content" id="transactions">
                     <div class="header-controls">
@@ -163,47 +163,7 @@
                     </div>
                 </div>
             
-                <div class="tab-content hidden" id="receipts">
-                    <div class="table-container" id="all_receipts">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Payer</th>
-                                    <th>Payment Method</th>
-                                    <th>Amount</th>
-                                    <th>Notes</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Existing receipts will be dynamically inserted here -->
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th><input type="date" class="input" id="add_receipt_date" placeholder="Receipt date" required></th>
-                                    <th>
-                                        <input type="text" class="input" id="add_receipt_payer" placeholder="Enter payer name" required>
-                                    </th>
-                                    <th>
-                                        <select class="input" id="add_receipt_payment_method" required>
-                                            <option value="" disabled selected>Select Payment Method</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Cheque">Cheque</option>
-                                            <option value="Bank Transfer">Bank Transfer</option>
-                                            <option value="Credit Card">Credit Card</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </th>
-                                    <th><input type="number" class="input" id="add_receipt_amount" placeholder="Amount" step="0.01" required></th>
-                                    <th><input type="text" class="input" id="add_receipt_notes" placeholder="Notes (optional)"></th>
-                                    <th><button class="button" onclick="add_receipt()">Add Receipt</button></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div id="add_receipt_form_message" style="color: red; margin-top: 10px;"></div>
-                    </div>
-                </div>
+               
 
             </div>
         
@@ -244,6 +204,31 @@
             <input class="button" type="button" onclick="delete_transaction()" style="background-color: tomato" value="Delete Transaction">
             <input class="button" type="button" onclick="toggle_modal('edit_transaction_modal',false);" style="background-color: tomato" value="Cancel">
         </div>
+
+       <!-- Receipt Modal -->
+        <div class="account_modal" id="receipt_modal">
+            <div class="receipt-header"><img src="img/logo_transparent.png" alt="Logo" class="receipt-logo"></div>
+            <div class="receipt-title"><h3>Transaction Receipt</h3></div>
+
+            <div class="receipt-detail">
+                <p><strong>Transaction #</strong> <span id="receipt_transaction_id" style="color: black;"></span></p>
+                <p><strong>Date:</strong> <span id="receipt_transaction_date" style="color: black;"></span></p>
+                <p><strong>Amount:</strong> $<span id="receipt_transaction_amount" style="color: black;"></span></p>
+                <p><strong>Tax:</strong> <span id="receipt_transaction_tax" style="color: black;"></span></p>
+                <p><strong>Memo:</strong> <span id="receipt_transaction_memo" style="color: black;"></span></p>
+            </div>
+
+            <div class="receipt-footer">
+                <p>Thank you for your payment!</p>
+                <p><a href="https://www.adsandfer.com" target="_blank">www.adsandfer.com</a></p>
+                <input class="button" type="button" onclick="print_receipt();" value="Print Receipt">
+                <input class="button" type="button" onclick="toggle_modal('receipt_modal', false);" style="background-color: tomato" value="Close">
+            </div>
+
+    
+        </div>
+
+
 
         
         <!-- Edit Account Modal -->
