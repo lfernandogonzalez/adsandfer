@@ -107,6 +107,7 @@ async function get_transactions() {
                     <td>${transaction.transaction_amount || ''}</td> <!-- Amount -->
                     <td>${transaction.transaction_tax || ''}</td>    <!-- Tax -->
                     <td>${transaction.transaction_memo || ''}</td>   <!-- Memo -->
+                    <td></td>
                     <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
                 </tr>`;
         }).join('');
@@ -277,4 +278,20 @@ function delete_account() {
         .catch(error => {
             console.error('Error deleting account:', error);
         });
+}
+
+
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-button');
+
+    tabs.forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    buttons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    document.getElementById(tabId).classList.remove('hidden');
+    document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
 }

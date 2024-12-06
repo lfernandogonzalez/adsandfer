@@ -62,175 +62,210 @@
 
 
         <div class="content-section">
-
-            <h2>Transactions</h2>
-            <div class="table-container" id="all_transactions">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="7">
-                                <div class="header-controls">
-                                    <select class="input" id="transaction_filter" onchange="get_transactions()" style="width: 200px;">
-                                        <option value="last_30_days">Last 30 days</option>
-                                        <option value="last_6_months">Last 6 months</option>
-                                        <option value="last_12_months">Last 12 months</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2023">2023</option>
-                                    </select>
-                        
-
-                                    <input type="text" id="transaction_search" class="input" placeholder="Search" style="width: 200px;">
-                                    <button id="search_button" class="button" onclick="searchTransactions()" style="background-color: transparent;">🔎</button>
-                        
-                                </div>
-                            </th>
-                        </tr>
-                        
-                        <tr>
-                            <th>Date</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Amount</th>
-                            <th>Tax</th>
-                            <th>Memo</th>
-                            <th>Attachment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><input type="date" class="input" id="add_transaction_date" placeholder="Transaction date"></th>
-                            <th>
-                                <select class="input" id="add_transaction_from">
-                                    <option value="" disabled selected>Select Account</option>
-                                </select>
-                            </th>
-                            <th>
-                                <select class="input" id="add_transaction_to">
-                                    <option value="" disabled selected>Select Account</option>
-                                </select>
-                            </th>
-
-                            <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo"></th>
-                            <th><input type="number" class="input" id="add_transaction_amount" placeholder="Amount" step="0.01"></th>
-                            <th>
-                                <select class="input" id="add_transaction_tax">
-                                    <option value="HST">HST (13%)</option>
-                                    <option value="PST">PST (8%)</option>
-                                    <option value="Exempt">Exempt (0%)</option>
-                                </select>
-                            </th>
-                            <th>
-                                <label for="add_transaction_attachment" style="cursor: pointer;">📎</label>
-                                <input type="file" class="input" id="add_transaction_attachment" style="display: none;">
-                            </th>
-                            <th><button class="button" onclick="add_transaction()">Add</button></th>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div id="add_transaction_form_message" style="color: red; margin-top: 10px;"></div>
-            </div>
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="showTab('transactions')">Transactions</button>
+                    <button class="tab-button" onclick="showTab('accounts')">Accounts</button>
+                    <button class="tab-button" onclick="showTab('receipts')">Receipts</button>
+                </div>
+                <div class="tab-content" id="transactions">
+                    <div class="header-controls">
+                        <select class="input" id="transaction_filter" onchange="get_transactions()" style="width: 200px;">
+                            <option value="last_30_days">Last 30 days</option>
+                            <option value="last_6_months">Last 6 months</option>
+                            <option value="last_12_months">Last 12 months</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
             
-            <br><div id="loading-bar" class="loading-bar" style="display: none;">
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-            </div>
+                        <input type="text" id="transaction_search" class="input" placeholder="Search" style="width: 200px;">
+                        <button id="search_button" class="button" onclick="searchTransactions()" style="background-color: transparent;">🔎</button>
+                    </div>
+                    <div class="table-container" id="all_transactions">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Amount</th>
+                                    <th>Tax</th>
+                                    <th>Memo</th>
+                                    <th>Attachment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><input type="date" class="input" id="add_transaction_date" placeholder="Transaction date"></th>
+                                    <th>
+                                        <select class="input" id="add_transaction_from">
+                                            <option value="" disabled selected>Select Account</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select class="input" id="add_transaction_to">
+                                            <option value="" disabled selected>Select Account</option>
+                                        </select>
+                                    </th>
+                                    <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo"></th>
+                                    <th><input type="number" class="input" id="add_transaction_amount" placeholder="Amount" step="0.01"></th>
+                                    <th>
+                                        <select class="input" id="add_transaction_tax">
+                                            <option value="HST">HST (13%)</option>
+                                            <option value="PST">PST (8%)</option>
+                                            <option value="Exempt">Exempt (0%)</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <label for="add_transaction_attachment" style="cursor: pointer;">📎</label>
+                                        <input type="file" class="input" id="add_transaction_attachment" style="display: none;">
+                                    </th>
+                                    <th><button class="button" onclick="add_transaction()">Add</button></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="add_transaction_form_message" style="color: red; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            
+                <div class="tab-content hidden" id="accounts">
+                    <div class="table-container" id="all_accounts">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><input class="input" id="add_account_name" type="text" placeholder="Enter Account Name" required></th>
+                                    <th>
+                                        <select class="input" id="add_account_type" required>
+                                            <option value="" disabled selected>Select Account Type</option>
+                                            <option value="Asset">Asset</option>
+                                            <option value="Liability">Liability</option>
+                                            <option value="Income">Income</option>
+                                            <option value="Expense">Expense</option>
+                                        </select>
+                                    </th>
+                                    <th><input class="input" value="0" id="add_account_balance" placeholder="0.00" disabled></th>
+                                    <th><input class="button" type="button" onclick="add_account();" value="Add"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="add_account_form_message" style="color: red; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            
+                <div class="tab-content hidden" id="receipts">
+                    <div class="table-container" id="all_receipts">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Payer</th>
+                                    <th>Payment Method</th>
+                                    <th>Amount</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Existing receipts will be dynamically inserted here -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><input type="date" class="input" id="add_receipt_date" placeholder="Receipt date" required></th>
+                                    <th>
+                                        <input type="text" class="input" id="add_receipt_payer" placeholder="Enter payer name" required>
+                                    </th>
+                                    <th>
+                                        <select class="input" id="add_receipt_payment_method" required>
+                                            <option value="" disabled selected>Select Payment Method</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Cheque">Cheque</option>
+                                            <option value="Bank Transfer">Bank Transfer</option>
+                                            <option value="Credit Card">Credit Card</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </th>
+                                    <th><input type="number" class="input" id="add_receipt_amount" placeholder="Amount" step="0.01" required></th>
+                                    <th><input type="text" class="input" id="add_receipt_notes" placeholder="Notes (optional)"></th>
+                                    <th><button class="button" onclick="add_receipt()">Add Receipt</button></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="add_receipt_form_message" style="color: red; margin-top: 10px;"></div>
+                    </div>
+                </div>
 
-            <!-- Edit Transaction Modal -->
-            <div class="account_modal" id="edit_transaction_modal">
-                <center><h3>Edit Transaction</h3></center>
-                <input type="hidden" id="edit_transaction_id">
-                <input type="date" class="input" id="edit_transaction_date" placeholder="Transaction date">
-                <select class="input" id="edit_transaction_from">
-                    <option value="" disabled selected>Select Account</option>
-                </select>
-                <select class="input" id="edit_transaction_to">
-                    <option value="" disabled selected>Select Account</option>
-                </select>
-                <input type="text" class="input" id="edit_transaction_memo" placeholder="Memo">
-                <input type="number" class="input" id="edit_transaction_amount" placeholder="Amount" step="0.01">
-                <select class="input" id="edit_transaction_tax">
-                    <option value="HST">HST (13%)</option>
-                    <option value="PST">PST (8%)</option>
-                    <option value="Exempt">Exempt (0%)</option>
-                </select>
-                <div id="edit_transaction_form_message" style="color: red; margin-top: 10px;"></div>
-                <br><input class="button" type="button" onclick="edit_transaction();" value="Submit Changes">
-                <input class="button" type="button" onclick="delete_transaction()" style="background-color: tomato" value="Delete Transaction">
-                <input class="button" type="button" onclick="toggle_modal('edit_transaction_modal',false);" style="background-color: tomato" value="Cancel">
             </div>
+        
+        </div>
 
+        <br>
+        <div id="loading-bar" class="loading-bar" style="display: none;">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+        </div>
+
+        <div class="modal-overlay" id="modal_overlay"></div>
+
+
+
+
+        <!-- Edit Transaction Modal -->
+        <div class="account_modal" id="edit_transaction_modal">
+            <center><h3>Edit Transaction</h3></center>
+            <input type="hidden" id="edit_transaction_id">
+            <input type="date" class="input" id="edit_transaction_date" placeholder="Transaction date">
+            <select class="input" id="edit_transaction_from">
+                <option value="" disabled selected>Select Account</option>
+            </select>
+            <select class="input" id="edit_transaction_to">
+                <option value="" disabled selected>Select Account</option>
+            </select>
+            <input type="text" class="input" id="edit_transaction_memo" placeholder="Memo">
+            <input type="number" class="input" id="edit_transaction_amount" placeholder="Amount" step="0.01">
+            <select class="input" id="edit_transaction_tax">
+                <option value="HST">HST (13%)</option>
+                <option value="PST">PST (8%)</option>
+                <option value="Exempt">Exempt (0%)</option>
+            </select>
+            <div id="edit_transaction_form_message" style="color: red; margin-top: 10px;"></div>
+            <br><input class="button" type="button" onclick="edit_transaction();" value="Submit Changes">
+            <input class="button" type="button" onclick="delete_transaction()" style="background-color: tomato" value="Delete Transaction">
+            <input class="button" type="button" onclick="toggle_modal('edit_transaction_modal',false);" style="background-color: tomato" value="Cancel">
         </div>
 
         
-        <div class="content-section">
-
-            <h2>Accounts</h2>
-            <div class="table-container" id="all_accounts">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><input class="input" id="add_account_name" type="text" placeholder="Enter Account Name" required></th>
-                            <th>
-                                <select class="input" id="add_account_type" required>
-                                    <option value="" disabled selected>Select Account Type</option>
-                                    <option value="Asset">Asset</option>
-                                    <option value="Liability">Liability</option>
-                                    <option value="Income">Income</option>
-                                    <option value="Expense">Expense</option>
-                                </select>
-                            </th>
-                            <th><input class="input" value="0" id="add_account_balance" placeholder="0.00" disabled></th>
-                            <th><input class="button" type="button" onclick="add_account();" value="Add"></th>
-                </table>
-                <div id="add_account_form_message" style="color: red; margin-top: 10px;"></div>
-
-            </div>
-            
-            <br><div id="loading-bar" class="loading-bar" style="display: none;">
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-            </div>
-
-            <div class="modal-overlay" id="modal_overlay"></div>
-            
-
-
-            <!-- Edit Account Modal -->
-            <div class="account_modal" id="edit_account_modal">
-                <center><h3>Edit Account</h3></center>
-                <input type="hidden" id="edit_account_id">
-                <b>Name:</b>
-                <input class="input" id="edit_account_name" type="text" placeholder="Name">
-                <br>
-                <b>Type:</b>
-                <select class="input" id="edit_account_type" required>
-                    <option value="" disabled>Select Account Type</option>
-                    <option value="Asset">Asset</option>
-                    <option value="Liability">Liability</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-                <div id="edit_account_form_message" style="color: red; margin-top: 10px;"></div>
-                <br><input class="button" type="button" onclick="edit_account();" value="Submit Changes">
-                <input class="button" type="button" onclick="delete_account()" style="background-color: tomato" value="Delete Account">
-                <input class="button" type="button" onclick="toggle_modal('edit_account_modal',false);" style="background-color: tomato" value="Cancel">
-            </div>
-
+        <!-- Edit Account Modal -->
+        <div class="account_modal" id="edit_account_modal">
+            <center><h3>Edit Account</h3></center>
+            <input type="hidden" id="edit_account_id">
+            <b>Name:</b>
+            <input class="input" id="edit_account_name" type="text" placeholder="Name">
+            <br>
+            <b>Type:</b>
+            <select class="input" id="edit_account_type" required>
+                <option value="" disabled>Select Account Type</option>
+                <option value="Asset">Asset</option>
+                <option value="Liability">Liability</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
+            </select>
+            <div id="edit_account_form_message" style="color: red; margin-top: 10px;"></div>
+            <br><input class="button" type="button" onclick="edit_account();" value="Submit Changes">
+            <input class="button" type="button" onclick="delete_account()" style="background-color: tomato" value="Delete Account">
+            <input class="button" type="button" onclick="toggle_modal('edit_account_modal',false);" style="background-color: tomato" value="Cancel">
         </div>
-
 
                   
     
