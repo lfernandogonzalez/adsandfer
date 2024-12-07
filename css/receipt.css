@@ -103,3 +103,74 @@
         display: none !important;  /* Hide buttons when printing */
     }
 }
+
+
+
+/* General container for the tab */
+.tab-content {
+    display: block;
+}
+
+/* Flex container for account info and add account form */
+.accounts-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+/* Account info container */
+.accounts-info {
+    flex: 1;
+    margin-right: 20px;
+}
+
+/* Add Account container */
+.add-account-container {
+    flex: 0 0 auto;
+    margin-right: 50px;
+}
+
+/* Add Account header */
+.add-account-header {
+    font-family: 'Roboto', sans-serif;
+    color: #857251;
+    font-size: 18pt;
+    font-weight: 500;
+}
+
+/* Add account form container */
+.add-account-form {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+/* Form fields */
+.input, .button {
+    width: auto;
+}
+
+/* Form message */
+.form-message {
+    color: red;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 425px) {
+    .accounts-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .add-account-form {
+        flex-direction: column;
+        gap: 0px; /* Reduce space between fields */
+        width: 100%;
+    }
+
+    .input, .button {
+        width: 100%;
+        margin-bottom: 5px; /* Reduce margin between form fields */
+    }
+}

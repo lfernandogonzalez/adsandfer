@@ -19,7 +19,11 @@ function toggle_modal(modalId, show = true) {
 }
 
 function createOptions(dropdown, data) {
-    dropdown.innerHTML = '<option value="" disabled selected>Select Account</option>';
+    if (dropdown.id === 'transaction_filter_account') {
+        dropdown.innerHTML = '<option value="all_accounts" selected>All Accounts</option>';
+    } else {
+        dropdown.innerHTML = '<option value="" disabled selected>Select</option>';
+    }
     data.forEach(item => {
         const option = document.createElement('option');
         // Set value to account_id for use in transaction
@@ -80,22 +84,27 @@ function clear_form(fields, messageId) {
 
 async function get_transactions() {
     const tbody = document.querySelector('#all_transactions tbody');
-    const filterValue = document.getElementById('transaction_filter').value;  // Get selected filter
+    const filter_timeframe = document.getElementById('transaction_filter_timeframe').value;  // Get selected timeframe filter
+    const filter_account = document.getElementById('transaction_filter_account').value; // Get selected account filter
+    const filter_search = document.getElementById('transaction_filter_search').value; // Get selected account filter
     document.getElementById('loading-bar').style.display = 'flex';
+
     try {
-        const response = await fetch(`${transactions_url}/get_transactions?filter=${filterValue}`);
+        // Append both filters to the API call
+        const response = await fetch(`${transactions_url}/get_transactions?timeframe=${filter_timeframe}&account=${encodeURIComponent(filter_account)}&search=${encodeURIComponent(filter_search)}`);
         if (!response.ok) throw new Error('Failed to fetch transactions.');
         const { transactions = [] } = await response.json();
         cachedTransactions = transactions;
 
-        // Sorting by date first, then by "transaction_from"
+       // Sorting by date (newest first), then by "transaction_from"
         const sortedTransactions = transactions.sort((a, b) => {
-            const dateComparison = a.transaction_date.localeCompare(b.transaction_date);
+            const dateComparison = b.transaction_date.localeCompare(a.transaction_date); // Reversed comparison for newest first
             if (dateComparison !== 0) return dateComparison;
             return a.transaction_from.localeCompare(b.transaction_from);
         });
 
-        // Render the transactions with correct order and account names
+
+        // Render the transactions
         tbody.innerHTML = sortedTransactions.map(transaction => {
             // Look up the account names for 'transaction_from' and 'transaction_to'
             const fromAccount = accountNamesMap[transaction.transaction_from] || { name: transaction.transaction_from, type: '' };
@@ -115,7 +124,7 @@ async function get_transactions() {
                     <td>
                          ${isIncome ? `<span style="cursor:pointer;font-size:24px;" onclick='generate_receipt(${JSON.stringify(transaction)})'>🧾</span>` : ''}
                     </td>
-                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
+                    <td style="width:24px; border:none"><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_transaction(${JSON.stringify(transaction)})'></td>
                 </tr>`;
         }).join('');
     } catch (error) {
@@ -124,6 +133,7 @@ async function get_transactions() {
         document.getElementById('loading-bar').style.display = 'none';
     }
 }
+
 
 
 
@@ -210,40 +220,112 @@ function print_receipt() {
 
 
 let accountNamesMap = {}; // Global map to store account_id -> { account_name, account_type }
-
 async function get_accounts() {
-    const tbody = document.querySelector('#all_accounts tbody');
+    const accountsContainer = document.querySelector('#all_accounts');
     document.getElementById('loading-bar').style.display = 'flex';
+
     try {
         const accountsResponse = await fetch(`${actions_url}/get_accounts`);
         if (!accountsResponse.ok) throw new Error('Failed to fetch accounts.');
         const { accounts = [] } = await accountsResponse.json();
-        
+
+        // Define the order for account types
+        const accountTypeOrder = {
+            Asset: 1,
+            Liability: 2,
+            Income: 3,
+            Expense: 4
+        };
+
         // Create the account names map
         accountNamesMap = accounts.reduce((map, account) => {
             map[account.account_id] = {
                 name: account.account_name,
-                type: account.account_type // Add account_type
+                type: account.account_type
             };
             return map;
         }, {});
-        await get_transactions();
-        tbody.innerHTML = accounts.sort((a, b) => a.account_name.localeCompare(b.account_name))
-            .map(account => `
-                <tr>
-                    ${['account_name', 'account_type', 'account_balance'].map(field => `<td>${account[field] || ''}</td>`).join('')}
-                    <td><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td>
-                </tr>`).join('');
+
+        // Sort accounts by type and then by name
+        const sortedAccounts = accounts.sort((a, b) => {
+            const typeComparison = (accountTypeOrder[a.account_type] || 5) - (accountTypeOrder[b.account_type] || 5);
+            if (typeComparison !== 0) return typeComparison; // Sort by type first
+            return a.account_name.localeCompare(b.account_name); // Then by name
+        });
+
+        // Group accounts by type
+        const groupedAccounts = {
+            Asset: [],
+            Liability: [],
+            Income: [],
+            Expense: []
+        };
+
+        sortedAccounts.forEach(account => {
+            groupedAccounts[account.account_type].push(account);
+        });
+
+        // Render the accounts grouped by type
+        let htmlContent = '';
+        let totalAssets = 0;
+        let totalLiabilities = 0;
+        let totalIncome = 0;
+        let totalExpenses = 0;
+
+        Object.keys(groupedAccounts).forEach(type => {
+            const accountsForType = groupedAccounts[type];
+            if (accountsForType.length > 0) {
+                // Add the section title (e.g., Assets, Liabilities)
+                htmlContent += `<table class="table"><thead><tr><th colspan='2'><div style="font-family: 'Roboto', sans-serif; color: #857251;font-size:14pt; font-weight: 500;">${type === 'Liability' ? 'Liabilitie' : type}s</div></th></tr></thead><tbody>`;
+
+                let totalBalance = 0;
+
+                // Add rows for each account
+                accountsForType.forEach(account => {
+                    const formattedBalance = `$${Math.abs(parseFloat(account.account_balance) || 0).toFixed(2)}`;
+                    htmlContent += `
+                        <tr><td>${account.account_name}</td><td width=300>${formattedBalance}</td><td style="width:24px; border:none"><img src="img/edit_icon.png" alt="Edit" style="width:24px;cursor:pointer;" onclick='open_edit_account(${JSON.stringify(account)})'></td></tr>`;
+                    totalBalance += Math.abs(parseFloat(account.account_balance) || 0);
+
+                    // Accumulate totals for Assets, Liabilities, Income, and Expenses
+                    if (type === 'Asset') totalAssets += Math.abs(parseFloat(account.account_balance) || 0);
+                    if (type === 'Liability') totalLiabilities += Math.abs(parseFloat(account.account_balance) || 0);
+                    if (type === 'Income') totalIncome += Math.abs(parseFloat(account.account_balance) || 0);
+                    if (type === 'Expense') totalExpenses += Math.abs(parseFloat(account.account_balance) || 0);
+                });
+
+                // Add the total row for this account type
+                htmlContent += `
+                    </tbody></table>
+                    <div style="width:100%; text-align: right; padding:20px; margin-bottom:20px; padding-right:60px"><h3>Total: $${totalBalance.toFixed(2)}</h3></div>`;
+            }
+        });
+
+
+        const equity = totalAssets - totalLiabilities;
+        const profit = totalIncome - totalExpenses;
         
+        document.getElementById('equity').innerHTML=`<p><div style="font-family: 'Roboto', sans-serif; color: #857251;font-size:18pt; font-weight: 500;">Equity: $${equity.toFixed(2)}</div><div style="font-size:10pt"> (Assets - Liabilities)</div></p>`;
+        document.getElementById('profit').innerHTML=`<p><div style="font-family: 'Roboto', sans-serif; color: #857251;font-size:18pt; font-weight: 500;">Profit: $${profit.toFixed(2)}</div><div style="font-size:10pt">  (Income - Expenses)</div></p>`;
+        
+
+
+        // Add the generated HTML to the accounts container
+        accountsContainer.innerHTML = htmlContent;
+
         // Populate dropdowns for adding/editing transactions
-        ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to']
-            .forEach(id => createOptions(document.getElementById(id), accounts));
+        ['add_transaction_from', 'add_transaction_to', 'edit_transaction_from', 'edit_transaction_to', 'transaction_filter_account']
+            .forEach(id => createOptions(document.getElementById(id), sortedAccounts));
+
+        // Fetch transactions after accounts are loaded
+        await get_transactions();
     } catch (error) {
         console.error('Error fetching accounts:', error);
     } finally {
         document.getElementById('loading-bar').style.display = 'none';
     }
 }
+
 
 
 function calculate_account_balances(accounts, transactions) {

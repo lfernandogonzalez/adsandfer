@@ -70,16 +70,20 @@
                 </div>
                 <div class="tab-content" id="transactions">
                     <div class="header-controls">
-                        <select class="input" id="transaction_filter" onchange="get_transactions()" style="width: 200px;">
+                        <select class="input" id="transaction_filter_timeframe" onchange="get_transactions()" style="width: 200px;">
                             <option value="last_30_days">Last 30 days</option>
                             <option value="last_6_months">Last 6 months</option>
                             <option value="last_12_months">Last 12 months</option>
                             <option value="2024">2024</option>
                             <option value="2023">2023</option>
                         </select>
+
+                        <select class="input" id="transaction_filter_account" onchange="get_transactions()" style="width: 200px;">
+                            <option value="all_accounts">All accounts</option>
+                        </select>
             
-                        <input type="text" id="transaction_search" class="input" placeholder="Search" style="width: 200px;">
-                        <button id="search_button" class="button" onclick="searchTransactions()" style="background-color: transparent;">🔎</button>
+                        <input type="text" id="transaction_filter_search" class="input" placeholder="Search" style="width: 200px;">
+                        <button id="search_button" class="button" onclick="get_transactions()" style="background-color: transparent;">🔎</button>
                     </div>
                     <div class="table-container" id="all_transactions">
                         <table class="table">
@@ -109,15 +113,15 @@
                                             <option value="" disabled selected>Select Account</option>
                                         </select>
                                     </th>
-                                    <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo"></th>
                                     <th><input type="number" class="input" id="add_transaction_amount" placeholder="Amount" step="0.01"></th>
                                     <th>
                                         <select class="input" id="add_transaction_tax">
-                                            <option value="HST">HST (13%)</option>
-                                            <option value="PST">PST (8%)</option>
-                                            <option value="Exempt">Exempt (0%)</option>
+                                            <option value="13% HST">13% HST</option>
+                                            <option value="8% PST">8% PST</option>
+                                            <option value="Exempt">Exempt</option>
                                         </select>
                                     </th>
+                                    <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo"></th>
                                     <th>
                                         <label for="add_transaction_attachment" style="cursor: pointer;">📎</label>
                                         <input type="file" class="input" id="add_transaction_attachment" style="display: none;">
@@ -129,38 +133,37 @@
                         <div id="add_transaction_form_message" style="color: red; margin-top: 10px;"></div>
                     </div>
                 </div>
-            
                 <div class="tab-content hidden" id="accounts">
-                    <div class="table-container" id="all_accounts">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th><input class="input" id="add_account_name" type="text" placeholder="Enter Account Name" required></th>
-                                    <th>
-                                        <select class="input" id="add_account_type" required>
-                                            <option value="" disabled selected>Select Account Type</option>
-                                            <option value="Asset">Asset</option>
-                                            <option value="Liability">Liability</option>
-                                            <option value="Income">Income</option>
-                                            <option value="Expense">Expense</option>
-                                        </select>
-                                    </th>
-                                    <th><input class="input" value="0" id="add_account_balance" placeholder="0.00" disabled></th>
-                                    <th><input class="button" type="button" onclick="add_account();" value="Add"></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div id="add_account_form_message" style="color: red; margin-top: 10px;"></div>
+                    <div class="accounts-container">
+                        <div class="accounts-info">
+                            <div id="equity"></div>
+                            <div id="profit"></div>
+                        </div>
+                
+                        <div class="add-account-container">
+                            <p></p>
+                            <div class="add-account-header">Add Account</div>
+                            <div class="add-account-form">
+                                <select class="input" id="add_account_type" required>
+                                    <option value="" disabled selected>Account Type</option>
+                                    <option value="Asset">Asset</option>
+                                    <option value="Liability">Liability</option>
+                                    <option value="Income">Income</option>
+                                    <option value="Expense">Expense</option>
+                                </select>
+                                <input class="input" id="add_account_name" type="text" placeholder="Account Name" required>
+                                <input type="hidden" id="add_account_balance" value="0">
+                                <input class="button" type="button" onclick="add_account();" value="Add">
+                            </div>
+                            <div id="add_account_form_message" class="form-message"></div>
+                        </div>
                     </div>
+                </div>
+                
+                    <div class="table-container" id="all_accounts">
+                        <!-- Accounts go here-->
+                    </div>
+                    
                 </div>
             
                
@@ -195,9 +198,9 @@
             <input type="text" class="input" id="edit_transaction_memo" placeholder="Memo">
             <input type="number" class="input" id="edit_transaction_amount" placeholder="Amount" step="0.01">
             <select class="input" id="edit_transaction_tax">
-                <option value="HST">HST (13%)</option>
-                <option value="PST">PST (8%)</option>
-                <option value="Exempt">Exempt (0%)</option>
+                <option value="13% HST">13% HST</option>
+                <option value="8% PST">8% PST</option>
+                <option value="Exempt">Exempt</option>
             </select>
             <div id="edit_transaction_form_message" style="color: red; margin-top: 10px;"></div>
             <br><input class="button" type="button" onclick="edit_transaction();" value="Submit Changes">
