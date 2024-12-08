@@ -86,6 +86,7 @@
                         <button id="search_button" class="button" onclick="get_transactions()" style="background-color: transparent;">🔎</button>
                     </div>
                     <div class="table-container" id="all_transactions">
+                        <div id="add_transaction_form_message" style="color: red; margin-bottom: 10px;"></div>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -97,21 +98,13 @@
                                     <th>Memo</th>
                                     <th>Attachment</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
                                 <tr>
                                     <th><input type="date" class="input" id="add_transaction_date" placeholder="Transaction date"></th>
                                     <th>
-                                        <select class="input" id="add_transaction_from">
-                                            <option value="" disabled selected>Select Account</option>
-                                        </select>
+                                        <select class="input" id="add_transaction_from"></select>
                                     </th>
                                     <th>
-                                        <select class="input" id="add_transaction_to">
-                                            <option value="" disabled selected>Select Account</option>
-                                        </select>
+                                        <select class="input" id="add_transaction_to"></select>
                                     </th>
                                     <th><input type="number" class="input" id="add_transaction_amount" placeholder="Amount" step="0.01"></th>
                                     <th>
@@ -121,16 +114,22 @@
                                             <option value="Exempt">Exempt</option>
                                         </select>
                                     </th>
-                                    <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo"></th>
+                                    <th><input type="text" class="input" id="add_transaction_memo" placeholder="Memo" style="width:100%;"></th>
                                     <th>
-                                        <label for="add_transaction_attachment" style="cursor: pointer;">📎</label>
-                                        <input type="file" class="input" id="add_transaction_attachment" style="display: none;">
+                                        <center><input type="file" class="input" id="add_transaction_attachment" style="display: none;">
+                                        <label for="add_transaction_attachment" class="custom-file-label">Upload</label>
+                                        </center>
                                     </th>
                                     <th><button class="button" onclick="add_transaction()">Add</button></th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                              
                             </tfoot>
                         </table>
-                        <div id="add_transaction_form_message" style="color: red; margin-top: 10px;"></div>
+                        
                     </div>
                 </div>
                 <div class="tab-content hidden" id="accounts">

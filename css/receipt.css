@@ -174,3 +174,19 @@
         margin-bottom: 5px; /* Reduce margin between form fields */
     }
 }
+
+.custom-file-label {
+    background-color: #f7f4ee;
+    color: #857251;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 13px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.custom-file-label:hover {
+    background-color: #e5e2da;
+}
