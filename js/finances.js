@@ -131,6 +131,7 @@ async function get_transactions() {
         console.error('Error fetching transactions:', error);
     } finally {
         document.getElementById('loading-bar').style.display = 'none';
+        console.log('Transactions loaded');
     }
 }
 
@@ -299,6 +300,7 @@ async function get_accounts() {
                     </tbody></table>
                     <div style="width:100%; text-align: right; padding:20px; margin-bottom:20px; padding-right:60px"><h3>Total: $${totalBalance.toFixed(2)}</h3></div>`;
             }
+            
         });
 
 
@@ -318,11 +320,13 @@ async function get_accounts() {
             .forEach(id => createOptions(document.getElementById(id), sortedAccounts));
 
         // Fetch transactions after accounts are loaded
+        console.log("Accounts loaded");
         await get_transactions();
     } catch (error) {
         console.error('Error fetching accounts:', error);
     } finally {
         document.getElementById('loading-bar').style.display = 'none';
+        
     }
 }
 
